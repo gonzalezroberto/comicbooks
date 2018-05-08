@@ -1,0 +1,104 @@
+body {
+  font-family: helvetica;
+}
+
+header {
+  background: lightblue;
+  height: 120px;
+  margin-bottom: 30px;
+  background-image: url('./log.png');
+  background-repeat: no-repeat;
+  background-size: 175px, 175px;
+  background-position: left;
+
+}
+
+header section {
+  width: 960px;
+  margin: 0 auto;
+}
+
+header section img {
+  margin-top: 15px;
+  float: left;
+  margin-right: 20px;
+  margin-left: 30px;
+
+}
+
+header section li {
+  color: #fff;
+  display: inline-block;
+  margin-top: 45px;
+  margin-right: 40px;
+  font-size: 20px;
+  margin-left: 100px;
+}
+
+main {
+  width: 960px;
+  margin: 30px auto;
+}
+
+.sub-banners li {
+  float: left;
+  margin-right: 40px;
+  margin-top: 30px;
+}
+
+.sub-banners li:last-child {
+  margin-right: 0;
+}
+
+.featured-section {
+  clear: both;
+}
+
+.featured-section img {
+  float: left;
+  margin-top: 30px;
+  margin-right: 30px;
+  margin-bottom: 30px;
+}
+
+.featured-section div {
+  margin-top: 30px;
+  width: 300px;
+  float: left;
+}
+
+.featured-section div h2 {
+  font-size: 26px;
+  margin-bottom: 5px;
+  text-shadow: 1px 1px 1px red;
+}
+
+.featured-section div p {
+  line-height: 30px;
+  height: 300px;
+  overflow: auto;
+}
+
+button {
+  border: none;
+  padding: 8px 8px;
+  color: #fff;
+  background: rgb(0, 0, 0);
+  font-size: 15px;
+  border-radius: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+label{
+  margin-left: 60px;
+  perspective-origin: center;
+
+}
+
+footer {
+  height: 150px;
+  background: #888;
+  clear: both;
+}
