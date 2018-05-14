@@ -4,18 +4,42 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const index = require('./routes/index');
-const app = express();
+const passport = require('passport');
+var app = express();
+var session = require('express-session')
+var MySQLStore = require('express-mysql-session')(session);
+var validate = require('express-validator')
+//var exphbs  = require('express-handlebars');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(validate());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'build')));
+//sessions
+var options  = {
+  host     : 'us-cdbr-iron-east-04.cleardb.net',
+  user     : 'bb353640536722',
+  password : 'f408fb6c',
+  database : 'heroku_f8d562e61e70440'
+};
+var sessionStore = new MySQLStore(options);
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  store: sessionStore,
+  saveUninitialized: true,
+  //cookie: { secure: true }
+}))
+app.use(passport.initialize());
+app.use(passport.session());
+//app.use(session({ secret: 'this-is-a-secret-token', cookie: { maxAge: 60000 }}));
+
 // view engine setup
+//app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+//app.set('view engine', 'handlebars');
 app.use('/api', index);
 app.get('*', (req, res) => {
   res.sendFile('build/index.html', { root: global });
