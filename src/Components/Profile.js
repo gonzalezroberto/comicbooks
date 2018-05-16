@@ -4,16 +4,36 @@ import axios from 'axios';
 class Profile extends Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {redirect:''};
   }
-  async getData() {
-       const res = await axios('/profile');
-       return await res.json(); // (Or whatever)
-   }
+  componentDidMount(){
+
+  }
+  logout()
+  {
+    fetch('api/logout', {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    credentials: "include"
+  }).then(res => res.json()).then( json =>
+    {
+      console.log(json);
+      this.setState({redirect:json})
+  }).then(this.forceUpdate());
+  }
+
   render() {
     return (
       <div className="feed">
         <h4> Profile Coming soon...</h4>
+          <button className ="submit-button"
+          type ="button"
+          onClick = {event => this.logout()}
+          >
+          Logout
+          </button>
       </div>
     );
   }

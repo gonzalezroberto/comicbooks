@@ -1,23 +1,33 @@
 import React, { Component } from 'react';
 import Comicbook from './Comicbook';
+import News from './News'
 import "../stylesheets/newsfeed.css"
 class Newsfeed extends Component {
   constructor() {
     super();
-    this.state = { comics: [] };
+    this.state = { news: [] };
   }
-  // componentDidMount(){
-  //   fetch('/api/comics')
-  //     .then(result => result.json(), console.log(this.result))
-  //     .then(json => {this.setState({comics:json});
-  //   });
-  // };
+  componentDidMount(){
+    fetch('/api/loadnews')
+      .then(result => result.json())
+      .then(json => {
+        console.log(json)
+        this.setState({news:json});
+      });
+  };
   render() {
     return (
-      <div className="feed">
-        <h4 className="feed-title">News feed</h4>
-      </div>
-    );
-  }
+      <div className ="main">
+        <h5>Newsfeed</h5>
+  <ul>
+  {this.state.news.map(news => {
+  return <News news= {news}/>;
+  })}
+  </ul>
+    </div>
+
+  )};
+
 }
+
 export default Newsfeed;

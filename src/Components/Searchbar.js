@@ -11,18 +11,13 @@ class Searchbar extends React.Component {
     fetch('/api/comics')
       .then(result => result.json())
       .then(json => {
-        console.log(json)
         this.setState({comics:json});
       });
   };
-
   handleSubmit = event => {
     event.preventDefault()
-
     const { comics, searchQuery, } = this.state
-
     let allSearchAbleStrings = []
-
     comics.map((comic, index) => {
         let strings = []
         const searchAbleKeys = [
@@ -30,42 +25,28 @@ class Searchbar extends React.Component {
           'writers',
           'characters',
         ]
-
         searchAbleKeys.map((key) => {
-
           const name = comic[key]
-
             strings.push({ string: name, id: index })
-
         })
-
         allSearchAbleStrings = allSearchAbleStrings.concat(strings)
     })
-
     let comicsThatMatch = []
-
     allSearchAbleStrings.map(({string, id}) => {
       const _string = string.toLowerCase()
       const _searchQuery = searchQuery.toLowerCase()
-
       //console.log(_searchQuery, _string, _string.indexOf(_searchQuery))
-
       if (_string.indexOf(_searchQuery) > -1) {
         console.log(searchQuery, id)
-
         if (comicsThatMatch.indexOf(id) === -1) {
           comicsThatMatch.push(id)
         }
       }
     })
-
     this.setState({
       comicsThatMatch,
     })
-
 };
-
-
   render() {
     return (
       <div className ="search">
@@ -87,17 +68,11 @@ class Searchbar extends React.Component {
         </button>
       </p>
       </form>
-
-
-
       {this.state.comicsThatMatch.map((id) => {
         const comic = this.state.comics[id]
         console.log('Result: ', id, comic.title)
         return <div key={id}>{comic.title}</div>
       })}
-
-
-
       </div>
     )
   }
