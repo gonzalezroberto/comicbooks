@@ -17,23 +17,13 @@ class Login extends React.Component {
     .then( () => {window.location.reload()})
   }
 componentWillMount(){
-  fetch('api/login', {
-  method: "GET",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  credentials: "include"
-}).then(res => res.json()).then( json =>
+  fetch('api/login',
+).then(res => res.json()).then( json =>
   { console.log('json(fetch):',json);  this.setState({redirect:json});});
   }
 logout(){
-  fetch('api/logout', {
-  method: "GET",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  credentials: "include"
-  }).then(res => res.json()).then( json =>
+  fetch('api/logout'
+  ).then(res => res.json()).then( json =>
   {console.log(json);this.setState({redirect:json})})
 }
   render(){
@@ -72,6 +62,7 @@ return (
         Login
         </button>
       </p>
+      <a href ="/register">Don't have an account? Signup! </a>
   </div>
 );
 }

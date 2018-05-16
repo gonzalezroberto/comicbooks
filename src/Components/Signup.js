@@ -3,12 +3,17 @@ import React from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Link} from 'react-router-dom'
 class Signup extends React.Component {
-  state = {
-    email: '',
-    pass: '',
-    firstname: '',
-    lastname: ''
+  constructor()
+  {
+    super();
+    this.state = {
+      email: '',
+      pass: '',
+      firstname: '',
+      lastname: ''
+    }
   }
+
 
   handleSubmit = event => {
       var username= this.state.email,
@@ -73,7 +78,6 @@ Sign Up
 </button>
 </p>
 </form>
-<Link to ="/login"> Already a user? Login </Link>
 </div>
 );
 

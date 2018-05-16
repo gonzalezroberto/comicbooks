@@ -56,7 +56,7 @@ const Mainlog = () => (
               <ul>
                   <a href="/">Home </a>
                   <a href="/search">Search </a>
-                  <a href="/register">Login/Signup </a>
+                  <a href="/login">Login/Signup </a>
                   <a href="/account">Account </a>
               </ul>
               </nav>
@@ -78,7 +78,6 @@ const Mainlog = () => (
                       <Link to="/">Home </Link>
                       <Link to="/search">Search </Link>
                       <Link to="/profile">Profile </Link>
-                      <Link to="/account">Account </Link>
                   </ul>
                   </nav>
                   </header>
