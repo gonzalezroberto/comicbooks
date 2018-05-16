@@ -1,5 +1,8 @@
 import "../stylesheets/Signup.css"
-import React from 'react';
+import React, { PropTypes } from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { Route, Redirect,Switch, withRouter } from 'react-router'
 import axios from 'axios';
 class Login extends React.Component {
   constructor(){
@@ -7,23 +10,12 @@ class Login extends React.Component {
     this.state = {email: '',pass: '',redirect:'' }
   }
   handleSubmit = event => {
-      var username= this.state.email,
-      password= this.state.pass;
+      var username= this.state.email,password= this.state.pass;
     axios.post(`api/login`, { username, password })
-    .then( res =>
-      {
-        console.log(res);
-        this.setState({redirect:res.data});
-
-      })
+    .then( res =>{console.log('res',res); this.setState({redirect:res.data})}
+    ).then(this.forceUpdate())
+    .then( () => {window.location.reload()})
   }
-switchView(props){
-  if(props.state.redirect === true)
-  return loggedIn(props);
-  else {
-    return needsToLogin(props);
-  }
-}
 componentWillMount(){
   fetch('api/login', {
   method: "GET",
@@ -32,78 +24,56 @@ componentWillMount(){
   },
   credentials: "include"
 }).then(res => res.json()).then( json =>
-  {
-    console.log(json);
-    this.setState({redirect:json});
-
-  })
-}
-logout()
-{
+  { console.log('json(fetch):',json);  this.setState({redirect:json});});
+  }
+logout(){
   fetch('api/logout', {
   method: "GET",
   headers: {
     "Content-Type": "application/json"
   },
   credentials: "include"
-}).then(res => res.json()).then( json =>
-  {
-    console.log(json);
-    this.setState({redirect:json});
-})
+  }).then(res => res.json()).then( json =>
+  {console.log(json);this.setState({redirect:json})})
 }
   render(){
-    var view = this.switchView(this);
-    return (
-      <div className ="login-view">
-        {view}
-      </div>
-    );
-  }
+     var view = loginform(this);
+     if(this.state.redirect){
+      return (<Redirect to="/profile" />)
+    }
+      else{
+        return(view)
+      }
 }
-  function loggedIn(props){
-    return (
-      <div>
-        <h2>You are logged in!</h2>
-          <p>
-            <button className ="submit-button"
-            type ="button"
-            onClick = {event => props.logout()}
-            >
-            Logout
-            </button>
-          </p>
-      </div>
-    );
-  }
-  function needsToLogin(props){
-    return (
-      <div>
-        <h2>Login form</h2>
-          <p>
-            <input className ="form-email"
-            type ="text"
-            placeholder ="username"
-            onChange = {event => props.setState({email: event.target.value})}
-            />
-          </p>
-          <p>
-            <input className ="form-password"
-            type ="password"
-            placeholder ="password"
-            onChange = {event => props.setState({pass: event.target.value})}
-            />
-          </p>
-          <p>
-            <button className ="submit-button"
-            type ="button"
-            onClick = {event => props.handleSubmit()}
-            >
-            Login
-            </button>
-          </p>
-      </div>
-    );
-  }
+}
+function loginform(props){
+return (
+  <div>
+    <h2>Login form</h2>
+      <p>
+        <input className ="form-email"
+        type ="text"
+        placeholder ="username"
+        onChange = {event => props.setState({email: event.target.value})}
+        />
+      </p>
+      <p>
+        <input className ="form-password"
+        type ="password"
+        placeholder ="password"
+        onChange = {event => props.setState({pass: event.target.value})}
+        />
+      </p>
+      <p>
+        <button className ="submit-button"
+        type ="button"
+        onClick = {event => props.handleSubmit()}
+        >
+        Login
+        </button>
+      </p>
+  </div>
+);
+}
 
-export default Login;
+export default withRouter(Login);

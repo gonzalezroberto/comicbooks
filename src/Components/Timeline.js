@@ -1,7 +1,9 @@
 import React from 'react';
-import {withRouter} from 'react-router';
 import axios from 'axios';
 import "../stylesheets/Timeline.css"
+import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { Route, Redirect,Switch, withRouter } from 'react-router'
 
 class Timeline extends React.Component {
 constructor(props){
@@ -30,10 +32,8 @@ logout()
   },
   credentials: "include"
 }).then(res => res.json()).then( json =>
-  {
-    console.log(json);
-    this.setState({redirect:json})
-}).then(this.forceUpdate());
+  {console.log(json);this.setState({redirect:json})
+}).then(this.forceUpdate()).then(()=> {return window.location.href='/login';});
 }
 render(){
   return(

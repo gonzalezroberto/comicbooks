@@ -7,7 +7,7 @@ import Profile from './Components/Profile';
 import Timeline from './Components/Timeline';
 import "./App.css"
 import React from 'react'
-import { BrowserRouter as Router, Route, Link, redirect, withRouter} from 'react-router-dom'
+import { BrowserRouter as Router, Route,Switch, Link, redirect, withRouter} from 'react-router-dom'
 {
   this.state = {redirect: ''}
 }
@@ -16,7 +16,7 @@ class Main extends React.Component {
     super();
     this.state = {redirect:''};
   }
-  componentDidMount(){
+  componentWillMount(){
     console.log("in componentDidMount")
     fetch('api/login', {
     method: "GET",
@@ -38,26 +38,26 @@ class Main extends React.Component {
     }
   }
   render(){
-    var view = this.switchView(this);
-    return (
-      <div className ="login-view">
-        {view}
-      </div>
-    );
+    if(this.state.redirect === false)
+      return (Mainlog());
+    else {
+      return (loggedinMain());
+    }
+
   }
 }
 
 const Mainlog = () => (
-        <Router>
+        <Switch>
             <div className ="main-background">
               <header>
                 <div className = "top_header"></div>
               <nav>
               <ul>
-                  <Link to="/">Home </Link>
-                  <Link to="/search">Search </Link>
-                  <Link to="/register">Login/Signup </Link>
-                  <Link to="/account">Account </Link>
+                  <a href="/">Home </a>
+                  <a href="/search">Search </a>
+                  <a href="/register">Login/Signup </a>
+                  <a href="/account">Account </a>
               </ul>
               </nav>
               </header>
@@ -66,10 +66,10 @@ const Mainlog = () => (
               <Route exact path="/register" render={() =><Signup/>}/>
               <Route exact path="/login" render={() => <Login/>}/>
           </div>
-        </Router>
+        </Switch>
     );
     const loggedinMain = () => (
-            <Router>
+            <Switch>
                 <div className ="main-background">
                   <header>
                     <div className = "top_header"></div>
@@ -88,6 +88,6 @@ const Mainlog = () => (
                   <Route exact path="/login" render={() => <Login/>}/>
                   <Route exact path="/profile" render={() => <Timeline/>}/>
               </div>
-            </Router>
+            </Switch>
         );
 export default Main;
