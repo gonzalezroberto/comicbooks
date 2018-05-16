@@ -48,7 +48,7 @@ class Main extends React.Component {
 }
 
 const Mainlog = () => (
-        <Switch>
+        <Router>
             <div className ="main-background">
               <header>
                 <div className = "top_header"></div>
@@ -57,7 +57,6 @@ const Mainlog = () => (
                   <a href="/">Home </a>
                   <a href="/search">Search </a>
                   <a href="/login">Login/Signup </a>
-                  <a href="/account">Account </a>
               </ul>
               </nav>
               </header>
@@ -66,10 +65,10 @@ const Mainlog = () => (
               <Route exact path="/register" render={() =><Signup/>}/>
               <Route exact path="/login" render={() => <Login/>}/>
           </div>
-        </Switch>
+        </Router>
     );
     const loggedinMain = () => (
-            <Switch>
+            <Router>
                 <div className ="main-background">
                   <header>
                     <div className = "top_header"></div>
@@ -87,6 +86,6 @@ const Mainlog = () => (
                   <Route exact path="/login" render={() => <Login/>}/>
                   <Route exact path="/profile" render={() => <Timeline/>}/>
               </div>
-            </Switch>
+            </Router>
         );
 export default Main;

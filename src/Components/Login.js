@@ -14,18 +14,22 @@ class Login extends React.Component {
     axios.post(`api/login`, { username, password })
     .then( res =>{console.log('res',res); this.setState({redirect:res.data})}
     ).then(this.forceUpdate())
-    .then( () => {window.location.reload()})
+    .then( () => {window.location.reload()}).catch(error => {
+    console.log(error.response)
+});
   }
 componentWillMount(){
-  fetch('api/login',
-).then(res => res.json()).then( json =>
-  { console.log('json(fetch):',json);  this.setState({redirect:json});});
-  }
+  fetch('api/login').then(res => res.json())
+  .then( json =>{ console.log('json(fetch):',json);this.setState({redirect:json});})
+  .catch(error => {console.log(error.response);});
+};
 logout(){
   fetch('api/logout'
   ).then(res => res.json()).then( json =>
-  {console.log(json);this.setState({redirect:json})})
-}
+  {console.log(json);this.setState({redirect:json})}).catch(error => {
+  console.log(error.response)
+})
+};
   render(){
      var view = loginform(this);
      if(this.state.redirect){
