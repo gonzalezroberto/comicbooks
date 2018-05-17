@@ -21,8 +21,7 @@ class Main extends React.Component {
   // }
   render(){
     return(
-      <div>
-      <Router>
+      <Switch>
           <div className ="main-background">
             <header>
               <div className = "top_header"></div>
@@ -41,9 +40,8 @@ class Main extends React.Component {
             <Route exact path="/login" render={() => <Login/>}/>
             <Route exact path="/profile" render={() => <Timeline/>}/>
         </div>
-      </Router>
-      </div>
+      </Switch>
     );
     }
   }
-  export default withRouter(Main);
+  export default Main;
