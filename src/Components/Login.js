@@ -13,15 +13,13 @@ class Login extends React.Component {
       var username= this.state.email,password= this.state.pass;
     axios.post(`api/login`, { username, password })
     .then( res =>{console.log('res',res); this.setState({loggedIn:res.data})}
-    ).then( () => {window.location.reload()}).catch(error => {
-    console.log(error.res)
-});
+  ).catch(error => {  console.log(error.res)});
   }
-componentWillMount(){
-  axios.get('api/login')
-  .then( res =>{ console.log('axio.get(api/login):',res.data);this.setState({loggedIn:res.data});})
-  .catch(error => {console.log("axios.get error");});
-};
+// componentWillMount(){
+//   axios.get('api/login')
+//   .then( res =>{ console.log('axio.get(api/login):',res.data);this.setState({loggedIn:res.data});})
+//   .catch(error => {console.log("axios.get error");});
+// };
 logout(){
   axios.get('api/logout')
   .then( res =>{ console.log(res);this.setState({loggedIn:false});})
@@ -30,41 +28,32 @@ logout(){
 
   render()
   {
-     if(this.state.loggedIn){
-      return (<Redirect to="/profile" />)
-    }
-      return (loginform(this));
+  return(  <div>
+      <h2>logged in</h2>
+        <p>
+          <input className ="form-email"
+          type ="text"
+          placeholder ="username"
+          />
+        </p>
+        <p>
+          <input className ="form-password"
+          type ="password"
+          placeholder ="password"
+          />
+        </p>
+        <p>
+          <button className ="submit-button"
+          type ="button"
+          onClick = {event => this.handleSubmit()}
+          >
+          Login
+          </button>
+        </p>
+        <a href ="/register">Don't have an account? Signup! </a>
+    </div>
+  );
 }
-}
-function loginform(props){
-return (
-  <div>
-    <h2>logged in</h2>
-      <p>
-        <input className ="form-email"
-        type ="text"
-        placeholder ="username"
-        onChange = {event => props.setState({email: event.target.value})}
-        />
-      </p>
-      <p>
-        <input className ="form-password"
-        type ="password"
-        placeholder ="password"
-        onChange = {event => props.setState({pass: event.target.value})}
-        />
-      </p>
-      <p>
-        <button className ="submit-button"
-        type ="button"
-        onClick = {event => props.handleSubmit()}
-        >
-        Login
-        </button>
-      </p>
-      <a href ="/register">Don't have an account? Signup! </a>
-  </div>
-);
 }
 
 export default Login;
