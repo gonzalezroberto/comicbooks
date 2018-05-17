@@ -2,19 +2,20 @@ import React, { Component } from 'react';
 import Comicbook from './Comicbook';
 import News from './News'
 import "../stylesheets/newsfeed.css"
+import { BrowserRouter as Router, Route,Switch, Link, redirect, withRouter} from 'react-router-dom'
 class Newsfeed extends Component {
   constructor() {
     super();
     this.state = { news: [] };
   }
-  componentDidMount(){
-    fetch('/api/loadnews')
-      .then(result => result.json())
-      .then(json => {
-        console.log(json)
-        this.setState({news:json});
-      });
-  };
+  // componentDidMount(){
+  //   fetch('/api/loadnews')
+  //     .then(result => result.json())
+  //     .then(json => {
+  //       console.log(json)
+  //       this.setState({news:json});
+  //     });
+  // };
   render() {
     return (
       <div className ="main">
@@ -30,4 +31,4 @@ class Newsfeed extends Component {
 
 }
 
-export default Newsfeed;
+export default withRouter(Newsfeed);
