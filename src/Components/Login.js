@@ -1,5 +1,5 @@
 import "../stylesheets/Signup.css"
-import React, { PropTypes } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Route, Redirect,Switch, withRouter } from 'react-router'

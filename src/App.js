@@ -30,7 +30,7 @@ class Main extends React.Component {
                 <Link to="/">Home </Link>
                 <Link to="/search">Search </Link>
                 <Link to="/profile">Profile </Link>
-                <a href="/login">Login/Signup </a>
+                <Link href="/login">Login/Signup </Link>
             </ul>
             </nav>
             </header>
