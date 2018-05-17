@@ -11,17 +11,10 @@ class Profile extends Component {
   }
   logout()
   {
-    fetch('api/logout', {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    credentials: "include"
-  }).then(res => res.json()).then( json =>
-    {
-      console.log(json);
-      this.setState({redirect:json})
-  }).then(this.forceUpdate());
+    axios.get('api/logout').then( res => {
+      console.log('res:',res);
+      this.setState({redirect:false})
+    }).catch(error => {console.log(error.res);});
   }
 
   render() {

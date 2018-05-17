@@ -51,7 +51,7 @@ router.get('/getuser', function(req, res, next) {
     // Use the connection
     var id = 82; // get the id
     connection.query('select * from accounts where id = ' + String(id), function (error, results, fields) {
-      return res.json(results)
+      res.json(results[0]);
       // And done with the connection.
       connection.release();
       // Handle error after the release.

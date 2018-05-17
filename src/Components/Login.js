@@ -7,43 +7,39 @@ import axios from 'axios';
 class Login extends React.Component {
   constructor(){
     super();
-    this.state = {email: '',pass: '',redirect:'' }
+    this.state = {email: '',pass: '',loggedIn:false }
   }
   handleSubmit = event => {
       var username= this.state.email,password= this.state.pass;
     axios.post(`api/login`, { username, password })
-    .then( res =>{console.log('res',res); this.setState({redirect:res.data})}
-    ).then(this.forceUpdate())
-    .then( () => {window.location.reload()}).catch(error => {
-    console.log(error.response)
+    .then( res =>{console.log('res',res); this.setState({loggedIn:res.data})}
+    ).then( () => {window.location.reload()}).catch(error => {
+    console.log(error.res)
 });
   }
 componentWillMount(){
-  fetch('api/login').then(res => res.json())
-  .then( json =>{ console.log('json(fetch):',json);this.setState({redirect:json});})
-  .catch(error => {console.log(error.response);});
+  axios.get('api/login')
+  .then( res =>{ console.log('axio.get(api/login):',res.data);this.setState({loggedIn:res.data});})
+  .catch(error => {console.log("axios.get error");});
 };
 logout(){
-  fetch('api/logout'
-  ).then(res => res.json()).then( json =>
-  {console.log(json);this.setState({redirect:json})}).catch(error => {
-  console.log(error.response)
-})
-};
-  render(){
-     var view = loginform(this);
-     if(this.state.redirect){
+  axios.get('api/logout')
+  .then( res =>{ console.log(res);this.setState({loggedIn:false});})
+  .catch(error => {console.log(error.res);});
+}
+
+  render()
+  {
+     if(this.state.loggedIn){
       return (<Redirect to="/profile" />)
     }
-      else{
-        return(view)
-      }
+      return (loginform(this));
 }
 }
 function loginform(props){
 return (
   <div>
-    <h2>Login form</h2>
+    <h2>logged in</h2>
       <p>
         <input className ="form-email"
         type ="text"

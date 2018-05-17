@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 app.use(passport.initialize());
 app.use(passport.session());
 var options  = {
-  host     : 'us-cdbr-iron-east-04.cleardb.net', //sessions
+  host     : 'us-cdbr-iron-east-04.cleardb.net',
   user     : 'bb353640536722',
   password : 'f408fb6c',
   database : 'heroku_f8d562e61e70440'
@@ -32,8 +32,7 @@ app.use(session({
   secret: 'keyboard cat',
   resave: false,
   store: sessionStore,
-  saveUninitialized: true,
-  //cookie:{secure:false}
+  saveUninitialized: true
 }));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

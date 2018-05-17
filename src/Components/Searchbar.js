@@ -14,6 +14,9 @@ class Searchbar extends React.Component {
         this.setState({comics:json});
       });
   };
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.state.comics != nextState.comics;
+  }
   handleSubmit = event => {
     event.preventDefault()
     const { comics, searchQuery, } = this.state
@@ -55,9 +58,8 @@ class Searchbar extends React.Component {
         <p>
         <input className ="form-search"
         type ="text"
-        value={this.state.searchQuery}
+        value='searchQuery'
         placeholder ="Search by title, author, or characters"
-        onChange = {event => this.setState({searchQuery: event.target.value})}
         />
         </p>
       <p>

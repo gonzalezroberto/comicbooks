@@ -13,12 +13,12 @@ class Main extends React.Component {
     super();
     this.state = {redirect:''};
   }
-  componentWillMount(){
-    console.log("in componentWillMount")
-    fetch('api/login')
-    .then(res => res.json()).then( json =>{console.log('json', json);this.setState({redirect:json});})
-    console.log("leaving componentWillMount")
-  }
+  // componentWillMount(){
+  //   console.log("in componentWillMount")
+  //   fetch('api/login')
+  //   .then(res => res.json()).then( json =>{console.log('json', json);this.setState({redirect:json});})
+  //   console.log("leaving componentWillMount")
+  // }
   render(){
     return(
       <div>

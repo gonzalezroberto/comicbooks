@@ -12,13 +12,12 @@ var pool  = mysql.createPool({
 });
 var passport = require('passport');
 router.get('/login', function(req,res, next){
-  console.log(req.session.passport);
-  console.log(req.session.passport !== null);
-  res.send(typeof req.session.passport !== 'undefined' && req.session.passport !== null);
+  console.log("in /login");
+  res.json(typeof req.session.passport !== 'undefined' && req.session.passport !== null);
 });
 router.get('/logout', function(req,res, next){
-  req.session.passport = null;
-  res.send(false);
+  req.logout();
+  res.json("false");
 });
 router.post('/login', function(req, res, next) {
   var user = req.body;
@@ -28,10 +27,10 @@ pool.getConnection(function(err, connection) {
     function (error, results, fields) {
       if (error) throw error;
       var user_id = results[0].id;
-      console.log('user_id:', user_id);
+      console.log('userid:', user_id);
       req.login(user_id, function(error){
         if (error) throw error;
-        res.send(req.isAuthenticated());
+        res.json(req.isAuthenticated());
   });
   connection.release();
 });
