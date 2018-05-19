@@ -19,21 +19,21 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'build')));
-// app.use(passport.initialize());
-// app.use(passport.session());
-// var options  = {
-//   host     : 'us-cdbr-iron-east-04.cleardb.net',
-//   user     : 'bb353640536722',
-//   password : 'f408fb6c',
-//   database : 'heroku_f8d562e61e70440'
-// };
-// var sessionStore = new MySQLStore(options);
-// app.use(session({
-//   secret: 'keyboard cat',
-//   resave: false,
-//   store: sessionStore,
-//   saveUninitialized: true
-// }));
+app.use(passport.initialize());
+app.use(passport.session());
+var options  = {
+  host     : 'us-cdbr-iron-east-04.cleardb.net',
+  user     : 'bb353640536722',
+  password : 'f408fb6c',
+  database : 'heroku_f8d562e61e70440'
+};
+var sessionStore = new MySQLStore(options);
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  store: sessionStore,
+  saveUninitialized: true
+}));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -42,6 +42,9 @@ app.use('/auth', login);
 app.use('/send', signup);
 app.use('/data', comics);
 app.get('/*', (req, res) => {
+  res.sendFile('build/index.html' , { root: global });
+});
+app.get('/search', (req, res) => {
   res.sendFile('build/index.html' , { root: global });
 });
 
