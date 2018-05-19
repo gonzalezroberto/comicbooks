@@ -42,7 +42,7 @@ app.use('/auth', login);
 app.use('/send', signup);
 app.use('/data', comics);
 app.get('/*', (req, res) => {
-  res.sendFile('build/index.html' /*, { root: global }*/);
+  res.sendFile('build/index.html' , { root: global });
 });
 
 // catch 404 and forward to error handler
