@@ -16,7 +16,6 @@ var validate = require('express-validator')
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(validate());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'build')));
 app.use(passport.initialize());
@@ -37,10 +36,14 @@ app.use(session({
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-app.use('/api', index, login, signup, comics);
-app.get('/*', (req, res) => {
-  res.sendFile('build/index.html', { root: global });
-});
+app.use('/api', index);
+app.use('/api', login);
+app.use('/api', signup);
+app.use('/api', comics);
+app.all('/*', (req, res, next) => {
+  console.log('intercepting requests..');
+  next();
+})
 app.get('*', (req, res) => {
   res.sendFile('build/index.html', { root: global });
 });
