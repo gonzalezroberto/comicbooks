@@ -57,10 +57,13 @@ const Mainlog = () => (
               </ul>
               </nav>
               </header>
-              <Route exact path="/" render={() => <Newsfeed/>}/>
-              <Route  path="/search" render={() => <Searchbar/>}/>
-              <Route exact path="/register" render={() =><Signup/>}/>
-              <Route exact path="/login" render={() => <Login/>}/>
+              <Switch>
+                <Route path="/" exact render={() => <Newsfeed/>}/>
+                <Route path="/search" render={() => <Searchbar/>}/>
+                <Route path="/register" render={() =><Signup/>}/>
+                <Route path="/login" render={() => <Login/>}/>
+                <Route render = {() => <Newsfeed/>}/>
+              </Switch>
           </div>
         </Router>
     );

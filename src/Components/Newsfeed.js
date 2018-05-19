@@ -19,7 +19,7 @@ class Newsfeed extends Component {
   render() {
     return (
       <div className ="main">
-        <h5>Newsfeed v0</h5>
+        <h5>Newsfeed v1</h5>
   <ul>
   {this.state.news.map(news => {
   return <News news= {news}/>;
