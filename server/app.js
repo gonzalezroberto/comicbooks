@@ -41,18 +41,8 @@ app.use('/api', index);
 app.use('/auth', login);
 app.use('/send', signup);
 app.use('/data', comics);
-app.all('/*', (req, res, next) => {
-  console.log('intercepting requests..');
-  next();
-})
-app.use('*', (req, res) => {
-  res.sendFile('build/index.html', { root: global });
-});
-app.get('*', (req, res) => {
-  res.sendFile('build/index.html', { root: global });
-});
-router.use('*', (req, res) => {
-  res.sendFile('build/index.html', { root: global });
+app.get('/*', (req, res) => {
+  res.sendFile('build/index.html' /*, { root: global }*/);
 });
 
 // catch 404 and forward to error handler
