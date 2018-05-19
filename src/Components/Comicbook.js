@@ -1,5 +1,5 @@
 import React from 'react';
-import "../stylesheets/Comicbook.css"
+//import "../stylesheets/Comicbook.css"
 const Comicbook = (props) => {
   return (
     <li>
