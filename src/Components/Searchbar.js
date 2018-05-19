@@ -8,10 +8,9 @@ class Searchbar extends React.Component {
     this.state = { comics: [], comicsThatMatch: [], searchQuery: '' };
   }
   componentDidMount(){
-    fetch('/api/comics')
-      .then(result => result.json())
-      .then(json => {
-        this.setState({comics:json});
+    axios.get('/data/comics')
+      .then(res => {
+        this.setState({comics:res});
       });
   };
   shouldComponentUpdate(nextProps, nextState) {
@@ -58,7 +57,7 @@ class Searchbar extends React.Component {
         <p>
         <input className ="form-search"
         type ="text"
-        value='searchQuery'
+        value={this.state.searchQuery}
         placeholder ="Search by title, author, or characters"
         />
         </p>

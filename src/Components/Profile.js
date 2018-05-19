@@ -11,7 +11,7 @@ class Profile extends Component {
   }
   logout()
   {
-    axios.get('api/logout').then( res => {
+    axios.get('auth/logout').then( res => {
       console.log('res:',res);
       this.setState({redirect:false})
     }).catch(error => {console.log(error.res);});

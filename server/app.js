@@ -12,6 +12,7 @@ var app = express();
 var session = require('express-session')
 var MySQLStore = require('express-mysql-session')(session);
 var validate = require('express-validator')
+var router = express.Router();
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -37,14 +38,20 @@ app.use(session({
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use('/api', index);
-app.use('/api', login);
-app.use('/api', signup);
-app.use('/api', comics);
+app.use('/auth', login);
+app.use('/send', signup);
+app.use('/data', comics);
 app.all('/*', (req, res, next) => {
   console.log('intercepting requests..');
   next();
 })
+app.use('*', (req, res) => {
+  res.sendFile('build/index.html', { root: global });
+});
 app.get('*', (req, res) => {
+  res.sendFile('build/index.html', { root: global });
+});
+router.use('*', (req, res) => {
   res.sendFile('build/index.html', { root: global });
 });
 

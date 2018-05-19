@@ -11,7 +11,7 @@ class Login extends React.Component {
   }
   handleSubmit = event => {
       var username= this.state.email,password= this.state.pass;
-    axios.post(`api/login`, { username, password })
+    axios.post(`auth/login`, { username, password })
     .then( res =>{console.log('res',res); this.setState({loggedIn:res.data})}
   ).catch(error => {  console.log(error.res)});
   }
@@ -21,7 +21,7 @@ class Login extends React.Component {
 //   .catch(error => {console.log("axios.get error");});
 // };
 logout(){
-  axios.get('api/logout')
+  axios.get('auth/logout')
   .then( res =>{ console.log(res);this.setState({loggedIn:false});})
   .catch(error => {console.log(error.res);});
 }

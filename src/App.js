@@ -5,6 +5,7 @@ import Searchbar from './Components/Searchbar';
 import Home from './Components/Home';
 import Profile from './Components/Profile';
 import Timeline from './Components/Timeline';
+import axios from 'axios';
 import "./App.css"
 import React from 'react'
 import { BrowserRouter as Router, Route,Switch, Link, redirect, withRouter} from 'react-router-dom'
@@ -18,16 +19,10 @@ class Main extends React.Component {
   }
   componentWillMount(){
     console.log("in componentDidMount")
-    fetch('api/login', {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    credentials: "include"
-  }).then(res => res.json()).then( json =>
+    axios.get('/auth/login').then( res =>
     {
-      console.log('json', json);
-      this.setState({redirect:json});
+      console.log('res', res);
+      this.setState({redirect:res});
     })
   }
   switchView(props){
