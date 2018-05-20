@@ -3,9 +3,10 @@ import axios from 'axios';
 import "../stylesheets/Searchbar.css";
 import Comicbook from "../Components/Comicbook"
 class Searchbar extends React.Component {
-  constructor() {
-    super();
-    this.state = { comics: [], comicsThatMatch: [], searchQuery: '' };
+  constructor(props) {
+    super(props);
+    this.state = { comics: [], comicsThatMatch: [], searchQuery: '', loggedIn:props.state.data };
+    console.log("this.state.loggedIn :" , this.state.loggedIn )
   }
   componentDidMount(){
     axios.get('/data/comics')

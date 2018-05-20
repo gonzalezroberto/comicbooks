@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import Comicbook from './Comicbook';
 import axios from 'axios';
 class Profile extends Component {
-  constructor() {
-    super();
-    this.state = {redirect:''};
+  constructor(props) {
+    super(props);
+    this.state = {loggedIn:props.state.data};
+    console.log("this.state.loggedIn :" , this.state.loggedIn )
   }
   componentDidMount(){
 

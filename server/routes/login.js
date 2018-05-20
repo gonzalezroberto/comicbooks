@@ -12,13 +12,18 @@ var pool  = mysql.createPool({
 });
 var passport = require('passport');
 router.get('/login', function(req,res, next){
-  console.log("in /login");
   res.json(typeof req.session.passport !== 'undefined' && req.session.passport !== null);
 });
 router.get('/logout', function(req,res, next){
   req.logout();
   res.json("false");
 });
+app.post('/login',passport.authenticate('local'), function(req, res) {
+      // If this function gets called, authentication was successful.
+      // `req.user` contains the authenticated user.
+      console.log(res);
+      res.json("hi");
+    });
 router.post('/login', function(req, res, next) {
   var user = req.body;
   var username=user.username,pass=user.password;
@@ -30,8 +35,8 @@ pool.getConnection(function(err, connection) {
       console.log('userid:', user_id);
       req.login(user_id, function(error){
         if (error) throw error;
-        res.json(req.isAuthenticated());
   });
+  res.json(req.isAuthenticated());
   connection.release();
 });
 });

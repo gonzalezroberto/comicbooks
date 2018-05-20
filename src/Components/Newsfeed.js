@@ -3,9 +3,10 @@ import News from './News'
 import "../stylesheets/newsfeed.css"
 import { BrowserRouter as Router, Route,Switch, Link, redirect, withRouter} from 'react-router-dom'
 class Newsfeed extends Component {
-  constructor() {
-    super();
-    this.state = { news: [] };
+  constructor(props) {
+    super(props);
+    this.state = { news: [], loggedIn: props.state.data };
+    console.log("this.state.loggedIn :" , this.state.loggedIn )
   }
   // componentDidMount(){
   //   fetch('/api/loadnews')

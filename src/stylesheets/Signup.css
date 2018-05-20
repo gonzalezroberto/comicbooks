@@ -27,19 +27,21 @@ div .signup-field
 }
 .lastname
 {
-  padding: 10px 70px;
+  padding: 5px 20px;
   display: flex;
   justify-content: space-around;
+  position: center;
 }
-.email
+.username
 {
-  padding: 10px 70px;
+  padding: 5px 20px;
   display: flex;
   justify-content: space-around;
+    position: center;
 }
 .password
 {
-  padding: 10px 70px;
+  padding: 5px 20px;
   display: flex;
   justify-content: space-around;
 }

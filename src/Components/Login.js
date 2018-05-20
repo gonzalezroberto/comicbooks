@@ -2,24 +2,33 @@ import "../stylesheets/Signup.css"
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { Route, Redirect,Switch, withRouter } from 'react-router'
+import { Route, Redirect,Switch, withRouter, Link } from 'react-router-dom'
 import axios from 'axios';
 class Login extends React.Component {
-  constructor(){
-    super();
-    this.state = {email: '',pass: '',loggedIn:false }
+  constructor(props){
+    super(props);
+    this.state = {username: '',password: '',loggedIn: props.state.data }
+    console.log("this.state.loggedIn :" , this.state.loggedIn )
+    if(this.state.loggedIn)
+      <Redirect to='/profile'/>
   }
   handleSubmit = event => {
-      var username= this.state.email,password= this.state.pass;
+    event.preventDefault();
+      var username= this.state.username,password= this.state.password;
+      console.log("username: ", this.state.username);
+      console.log("pass: ",this.state.password);
     axios.post(`auth/login`, { username, password })
-    .then( res =>{console.log('res',res); this.setState({loggedIn:res.data})}
-  ).catch(error => {  console.log(error.res)});
+    .then(res =>{
+    this.setState({loggedIn:res.data});
+    if(res.data){this.props.pass.history.push("/")}
+    else{this.props.pass.history.push("/login")}
+  })
   }
-// componentWillMount(){
-//   axios.get('api/login')
-//   .then( res =>{ console.log('axio.get(api/login):',res.data);this.setState({loggedIn:res.data});})
-//   .catch(error => {console.log("axios.get error");});
-// };
+componentWillMount(){
+  axios.get('auth/login')
+  .then( res =>{ console.log('axio.get:',res.data);this.setState({loggedIn:res.data});})
+  .catch(error => {console.log("axios.get error");});
+};
 logout(){
   axios.get('auth/logout')
   .then( res =>{ console.log(res);this.setState({loggedIn:false});})
@@ -30,27 +39,29 @@ logout(){
   {
   return(  <div>
       <h2>logged in</h2>
-        <p>
-          <input className ="form-email"
+      <form onSubmit={this.handleSubmit}>
+          <input className ="username"
           type ="text"
           placeholder ="username"
+           onChange = {event => this.setState({username: event.target.value})}
           />
-        </p>
+
         <p>
-          <input className ="form-password"
+          <input className ="password"
           type ="password"
           placeholder ="password"
+           onChange = {event => this.setState({password: event.target.value})}
           />
         </p>
         <p>
-          <button className ="submit-button"
-          type ="button"
-          onClick = {event => this.handleSubmit()}
+          <button className ="submit"
+          type ="submit"
           >
           Login
           </button>
         </p>
-        <a href ="/register">Don't have an account? Signup! </a>
+      </form>
+        <Link  to="/register">Don't have an account? Signup! </Link>
     </div>
   );
 }
