@@ -41,12 +41,9 @@ app.use('/api', index);
 app.use('/auth', login);
 app.use('/send', signup);
 app.use('/data', comics);
-app.get('/*', (req, res) => {
-  res.sendFile('build/index.html' , { root: global });
-});
-app.get('/search', (req, res) => {
-  res.sendFile('build/index.html' , { root: global });
-});
+app.get('/*', function (req, res) {
+   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+ });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

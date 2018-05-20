@@ -2,16 +2,11 @@ import Newsfeed from './Components/Newsfeed';
 import Login from './Components/Login';
 import Signup from './Components/Signup';
 import Searchbar from './Components/Searchbar';
-import Home from './Components/Home';
-import Profile from './Components/Profile';
-import Timeline from './Components/Timeline';
+//import Timeline from './Components/Timeline';
 import axios from 'axios';
 import "./App.css"
 import React from 'react'
-import { BrowserRouter as Router, Route,Switch, Link, redirect, withRouter} from 'react-router-dom'
-{
-  this.state = {redirect: ''}
-}
+import { BrowserRouter as Router, Route,Switch, Link, withRouter} from 'react-router-dom'
 class Main extends React.Component {
   constructor() {
     super();
@@ -37,16 +32,16 @@ class Main extends React.Component {
             <Link to="/search">Search </Link>
             <Link to="/profile">Profile </Link>
             <Link to="/login">Login </Link>
-              <Link to="/register">Signup </Link>
+            <Link to="/register">Signup </Link>
           </ul>
           </nav>
           </header>
           <Switch>
-            <Route path="/" exact render={() => <Newsfeed/>}/>
-            <Route path="/search" render={() => <Searchbar/>}/>
-            <Route path="/register" render={() =><Signup/>}/>
-            <Route path="/login" render={() => <Login/>}/>
-            <Route render = {() => <Newsfeed/>}/>
+            <Route path="/" exact component={Newsfeed}/>
+            <Route path="/search" component={Searchbar}/>
+            <Route path="/register" component={Signup}/>
+            <Route path="/login" component={Login}/>
+            <Route component= {Newsfeed}/>
           </Switch>
       </div>
     </Router>

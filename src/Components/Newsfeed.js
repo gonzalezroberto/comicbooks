@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Comicbook from './Comicbook';
 import News from './News'
 import "../stylesheets/newsfeed.css"
 import { BrowserRouter as Router, Route,Switch, Link, redirect, withRouter} from 'react-router-dom'
@@ -31,4 +30,4 @@ class Newsfeed extends Component {
 
 }
 
-export default withRouter(Newsfeed);
+export default Newsfeed;
