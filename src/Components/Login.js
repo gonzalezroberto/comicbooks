@@ -67,4 +67,4 @@ logout(){
 }
 }
 
-export default Login;
+export default withRouter(Login);

@@ -16,14 +16,9 @@ router.get('/login', function(req,res, next){
 });
 router.get('/logout', function(req,res, next){
   req.logout();
-  res.json("false");
+  res.json(false);
 });
-app.post('/login',passport.authenticate('local'), function(req, res) {
-      // If this function gets called, authentication was successful.
-      // `req.user` contains the authenticated user.
-      console.log(res);
-      res.json("hi");
-    });
+
 router.post('/login', function(req, res, next) {
   var user = req.body;
   var username=user.username,pass=user.password;

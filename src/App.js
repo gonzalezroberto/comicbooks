@@ -8,17 +8,15 @@ import "./App.css"
 import React from 'react'
 import { BrowserRouter as Router, Route,Switch, Link, withRouter} from 'react-router-dom'
 class Main extends React.Component {
-  constructor() {
-    super();
-    this.state = {loggedIn:''};
+  constructor(props) {
+    super(props);
+    this.state = {loggedIn: false};
   }
   componentWillMount(){
-    axios.get('/auth/login')
-    .then( res =>{
-      console.log('res', res);
-      this.setState({loggedIn:res});
-    }).catch(err => console.log(err));
-  }
+    axios.get('auth/login')
+    .then( res =>this.setState({loggedIn:res.data}))
+    .catch(error => {console.log("axios.get error");});
+  };
   render(){
     return(
     <Router>
@@ -41,7 +39,7 @@ class Main extends React.Component {
             <Route path="/profile" render={(props)=><Timeline pass={props} state={this.state.loggedIn}/>}/>
             <Route path="/register" render={(props)=><Signup pass={props}/>}/>
             <Route path="/login" render={(props)=><Login pass={props} state={this.state.loggedIn}/>}/>
-            <Route component= {Newsfeed}/>
+            //<Route component= {Newsfeed}/>
           </Switch>
       </div>
     </Router>

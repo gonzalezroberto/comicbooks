@@ -1,11 +1,17 @@
 .feed{
 
-	position: relative;
-	bottom: 18px;
+	bottom: 1px;
 
 }
 .feed-title {
     background-color: #FFAA3B;
     padding: 0.5em 1em;
-    box-decoration-break: clone;
+}
+ul
+{
+	padding:3em 1em;
+}
+.main
+{
+	background-color: #FFAA3B;
 }
