@@ -10,16 +10,16 @@ class Newsfeed extends Component {
     this.state = { news: [], loggedIn:'' };
     console.log("this.state.loggedIn :" , this.state.loggedIn )
   }
-  componentDidMount(){
+  componentWillMount(){
     axios.get('/api/loadnews')
       .then(res =>{
-        console.log(res.data);
-        var output = res.data.replace('[{', ''),
-            tempArr =[];
-        var arrayOfStrings = output.split('},{');
+        console.log('res.data',res.data);
+        var data= res.data, tempArr =[];
+        data = data.replace('[{', '');
+        var arrayOfStrings = data.split('},{');
         for (var i = 0; i < arrayOfStrings.length-1; i++) {
           arrayOfStrings[i] = '{'+ arrayOfStrings[i] + '}'
-          console.log(i ,arrayOfStrings[i])
+          console.log('aoS' ,arrayOfStrings[i])
           tempArr.push(JSON.parse(arrayOfStrings[i]));}
         var lastEntry= '{' + arrayOfStrings[arrayOfStrings.length-1]
         tempArr.push(JSON.parse(lastEntry));

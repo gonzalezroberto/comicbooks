@@ -65,11 +65,12 @@ router.get('/loadnews', function(req, res, next) {
 pool.getConnection(function(err, connection) {
 // Use the connection
 connection.query("select * from newsfeed order by id DESC", function (error, results, fields) {
+  return res.json(results)
+  connection.release();
   if (error) throw error;
-  console.log(results);
- res.send(results)
+
 // And done with the connection.
-connection.release();
+
 // Handle error after the release.
 
 // Don't use the connection here, it has been returned to the pool.
