@@ -13,17 +13,17 @@ class Newsfeed extends Component {
   componentWillMount(){
     axios.get('/api/loadnews')
       .then(res =>{
-        console.log('res.data',res.data);
-        var data= res.data, tempArr =[];
-        data = data.replace('[{', '');
-        var arrayOfStrings = data.split('},{');
-        for (var i = 0; i < arrayOfStrings.length-1; i++) {
-          arrayOfStrings[i] = '{'+ arrayOfStrings[i] + '}'
-          console.log('aoS' ,arrayOfStrings[i])
-          tempArr.push(JSON.parse(arrayOfStrings[i]));}
-        var lastEntry= '{' + arrayOfStrings[arrayOfStrings.length-1]
-        tempArr.push(JSON.parse(lastEntry));
-        this.setState({news:tempArr});
+        // console.log('res.data',res.data);
+        // var data= res.data, tempArr =[];
+        // data = data.replace('[{', '');
+        // var arrayOfStrings = data.split('},{');
+        // for (var i = 0; i < arrayOfStrings.length-1; i++) {
+        //   arrayOfStrings[i] = '{'+ arrayOfStrings[i] + '}'
+        //   console.log('aoS' ,arrayOfStrings[i])
+        //   tempArr.push(JSON.parse(arrayOfStrings[i]));}
+        // var lastEntry= '{' + arrayOfStrings[arrayOfStrings.length-1]
+        // tempArr.push(JSON.parse(lastEntry));
+        this.setState({news:res.data});
       }).catch(err => console.log(err));
   };
   render() {
