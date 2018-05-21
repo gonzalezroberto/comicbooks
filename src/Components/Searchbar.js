@@ -6,8 +6,7 @@ class Searchbar extends React.Component {
   constructor(props) {
     super(props);
     console.log(props);
-    this.state = { comics: [], comicsThatMatch: [], searchQuery: '', loggedIn:props.state.data };
-    console.log("this.state.loggedIn :" , this.state.loggedIn )
+    this.state = { comics: [], comicsThatMatch: [], searchQuery: ''};
   }
   componentDidMount(){
     fetch('/data/comics')

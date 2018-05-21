@@ -7,8 +7,7 @@ class Newsfeed extends Component {
   constructor(props) {
     super(props);
     console.log(props);
-    this.state = { news: [], loggedIn:'' };
-    console.log("this.state.loggedIn :" , this.state.loggedIn )
+    this.state = { news: [] };
   }
   componentWillMount(){
     axios.get('/api/loadnews')
@@ -29,10 +28,10 @@ class Newsfeed extends Component {
   render() {
     return (
       <div className ="main">
-        <h5>Newsfeed v100</h5>
+        <h5>Newsfeed</h5>
         <ul>
           <p>
-        {this.state.news.map(news => {return( <News news= {news}/>)})}
+        {this.state.news.map(news => {return( <News key= {news.id} news= {news}/>)})}
         </p>
         </ul>
       </div>

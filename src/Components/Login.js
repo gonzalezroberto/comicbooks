@@ -6,25 +6,20 @@ class Login extends React.Component {
   constructor(props){
     super(props);
     console.log(props)
-    this.state = {username: '',password: '',loggedIn: props.state.data }
-    if(this.state.loggedIn)
-      <Redirect to='/profile'/>
+    this.state = {username: '',password: '' }
   }
-  handleSubmit = event => {
-    event.preventDefault();
-    var username= this.state.username,password= this.state.password;
-    axios.post(`auth/login`, { username, password })
-    .then(res =>{
-      this.setState({loggedIn:res.data});
-      if(res.data){this.props.pass.history.push("/")}
-      else{this.props.pass.history.push("/login")}
-    })
+  validateForm() {
+    return this.state.username.length > 0 && this.state.password.length > 0;
   }
-  componentWillMount(){
-    axios.get('auth/login')
-    .then( res =>{ console.log('axio.get:',res.data);this.setState({loggedIn:res.data});})
-    .catch(error => {console.log("axios.get error");});
-  };
+  // componentWillMount(){
+  //   axios.get('auth/login')
+  //   .then( res =>
+  //     {
+  //       console.log('axio.get:',res.data);
+  //       this.setState({loggedIn:res.data});
+  //     })
+  //   .catch(error => {console.log("axios.get error");});
+  // };
 
   logout(){
     axios.get('auth/logout')
@@ -33,8 +28,12 @@ class Login extends React.Component {
 
   render()
   {
+    console.log('loggedIn', this.loggedIn);
+    if(this.loggedIn)
+    return <h2>Logged in!</h2>;
+
     return(  <div>
-        <h2>logged in</h2>
+        <h2>Log In</h2>
         <form onSubmit={this.handleSubmit}>
             <input className ="username"
             type ="text"
@@ -45,7 +44,7 @@ class Login extends React.Component {
             placeholder ="password"
              onChange = {event => this.setState({password: event.target.value})}/>
           </p>
-          <p><button className ="submit" type ="submit">Login</button></p>
+          <p><button className ="submit" disabled={!this.validateForm()} type ="submit">Login</button></p>
         </form>
           <Link to="/register">Don't have an account? Signup! </Link>
       </div>
