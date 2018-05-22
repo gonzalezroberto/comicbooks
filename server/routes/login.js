@@ -25,13 +25,16 @@ router.post('/login', function(req, res, next) {
 pool.getConnection(function(err, connection) {
     connection.query('SELECT * FROM accounts WHERE username= ? and password= ?;', [username, pass],
     function (error, results, fields) {
-      if (error) throw error;
-      var user_id = results[0].id;
-      console.log('userid:', user_id);
-      req.login(user_id, function(error){
-        if (error) throw error;
-  });
-  res.json(req.isAuthenticated());
+      if(results.length !== 0){ //results is an array. if size 0, np results found
+        var user_id = results[0].id;
+        console.log('userid:', user_id);
+        req.login(user_id, function(error){
+          if (error) throw error;
+          res.json(req.isAuthenticated());
+        });
+      }
+      else { if (error) throw error;  res.send(false)}
+
   connection.release();
 });
 });

@@ -1,17 +1,21 @@
-.feed{
 
-	bottom: 1px;
+.newsfeed-title {
+    font-family: sans-serif;
+		font-size: 50px;
 
 }
-.feed-title {
-    background-color: #FFAA3B;
-    padding: 0.5em 1em;
-}
-ul
+
+.news-block
 {
-	padding:3em 1em;
+  overflow: auto;
 }
-.main
+.news-title-area
 {
-	background-color: #FFAA3B;
+	padding-top: 0.2em;
+	padding-bottom: 13em;
+	background-image: url('../headerback.png');
+	height: 100px;
+	background-repeat: no-repeat;
+  background-position:  center;
+	background-size: contain;
 }

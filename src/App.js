@@ -1,5 +1,4 @@
 import Newsfeed from './Components/Newsfeed';
-//import Login from './Components/Login';
 import Signup from './Components/Signup';
 import Searchbar from './Components/Searchbar';
 import Timeline from './Components/Timeline';
@@ -19,18 +18,13 @@ import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from
     componentWillMount(){
       axios.get('auth/login')
       .then( res =>
-        {
-          console.log('axio.get:',res.data);
-          this.setState({isAuthenticated:res.data});
-        })
+        { console.log('axio.get:',res.data);
+          this.setState({isAuthenticated:res.data});  })
       .catch(error => {console.log("axios.get error");});
     };
     handleAuthChange(status)
     {
-      console.log('status', status);
-      console.log("this.location", this.location);
       this.setState({isAuthenticated:status});
-      console.log('this.isAuthenticated(main)',this.isAuthenticated);
     }
     render()
     {
@@ -40,7 +34,7 @@ import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from
               <header>
                 <div className = "top_header"></div>
               <nav>
-              <ul>
+              <ul className="navbar">
                 <Link to="/">Home </Link>
                 <Link to="/search">Search </Link>
                 <Link to="/profile">Profile </Link>
@@ -73,21 +67,30 @@ class Login extends React.Component {
     super(props);
     console.log('login Props:', props);
     this.state = {
-      redirectToReferrer: (false || props.state.isAuthenticated),
+      redirectToReferrer: (false || props.state),
       isAuthenticated: props.state,
       username:'', password: ''
     };
   }
-
+  componentWillMount(){
+    axios.get('/auth/login')
+      .then(res =>{
+          this.setState({isAuthenticated:res.data, redirectToReferrer:res.data});
+      }).catch(err => console.log(err));
+  };
   handleSubmit = event => {
     event.preventDefault();
     console.log("handleSubmit")
     var username= this.state.username,password= this.state.password;
     axios.post(`auth/login`, { username, password })
-    .then(res => { console.log('logged in successful? ',res.data);
+    .then(res => {
+      console.log('auth/login', res)
+      if(!res.data) {alert('Account not found!')}
+      else{
       this.props.authCheck(res.data);
       this.setState({ redirectToReferrer: res.data,  isAuthenticated: res.data});
-    });
+    }
+    }).catch(err => console.log(err));
     }
 
   validateForm() {
@@ -111,11 +114,10 @@ class Login extends React.Component {
                   type ="text"
                   placeholder ="username"
                    onChange = {event => this.setState({username: event.target.value})}/>
-                <p><input className ="password"
+                <input className ="password"
                   type ="password"
                   placeholder ="password"
                    onChange = {event => this.setState({password: event.target.value})}/>
-                </p>
                 <p><button className ="submit" disabled={!this.validateForm()} type ="submit">Login</button></p>
               </form>
                 <Link to="/register">Don't have an account? Signup! </Link>

@@ -6,15 +6,9 @@ class Signup extends React.Component {
   constructor()
   {
     super();
-    this.state = {
-      email: '',
-      pass: '',
-      firstname: '',
-      lastname: ''
+    this.state = {  email: '',pass: '',firstname: '',lastname: ''
     }
   }
-
-
   handleSubmit = event => {
       var username= this.state.email,
           pass = this.state.pass,
@@ -39,46 +33,36 @@ const signupform =(props) =>
 (
 
   <div>
-      <h2>Signup Form</h2>
-  <form>
-  <p>
-  <input className ="firstname"
-  type ="text"
-  placeholder ="First Name"
-  onChange = {event => props.setState({firstname: event.target.value})}
-  />
-  </p>
-  <p>
-  <input className ="lastname"
-  type ="text"
-  placeholder ="Last Name"
-  onChange = {event => props.setState({lastname: event.target.value})}
-  />
-  </p>
-<p>
-<input className ="email"
-type ="text"
-placeholder ="email"
-onChange = {event => props.setState({email: event.target.value})}
-/>
-</p>
-<p>
-<input className ="password"
-type ="password"
-placeholder ="password"
-onChange = {event => props.setState({pass: event.target.value})}
-/>
-</p>
-<p>
-<button className ="submit-button"
-type ="button"
-onClick = {event => props.handleSubmit()}
->
-Sign Up
-</button>
-</p>
-</form>
-</div>
-);
+    <h2>Signup Form</h2>
+    <form>
+        <input className ="firstname"
+        type ="text"
+        placeholder ="First Name"
+        onChange = {event => props.setState({firstname: event.target.value})}
+        />
+        <input className ="lastname"
+        type ="text"
+        placeholder ="Last Name"
+        onChange = {event => props.setState({lastname: event.target.value})}
+        />
+        <input className ="email"
+        type ="text"
+        placeholder ="email"
+        onChange = {event => props.setState({email: event.target.value})}
+        />
+        <input className ="password"
+        type ="password"
+        placeholder ="password"
+        onChange = {event => props.setState({pass: event.target.value})}
+        />
+        <button className ="submit-button"
+        type ="button"
+        onClick = {event => props.handleSubmit()}
+        >
+        Sign Up
+      </button>
+    </form>
+  </div>
+  );
 
 export default Signup;

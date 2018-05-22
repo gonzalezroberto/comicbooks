@@ -10,22 +10,17 @@ class Newsfeed extends Component {
     this.state = { news: [] };
   }
   componentWillMount(){
-    var hi = 0;
     axios.get('/api/loadnews')
       .then(res =>{
-        hi =res;
         this.setState({news:res.data});
       }).catch(err => console.log(err));
-
   };
   render() {
     return (
-      <div className ="main">
-        <h5>Newsfeed</h5>
-        <ul>
-          <p>
+      <div className ="main-news">
+        <div className="news-title-area"><h5 className="newsfeed-title"></h5></div>
+        <ul className="news-block">
         {this.state.news.map(news => {return( <News key= {news.id} news= {news}/>)})}
-        </p>
         </ul>
       </div>
   )};
