@@ -13,6 +13,24 @@ import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from
     {
       super();
       this.state = {isAuthenticated:false}
+      console.log("in Main");
+      this.handleAuthChange = this.handleAuthChange.bind(this);
+    }
+    componentWillMount(){
+      axios.get('auth/login')
+      .then( res =>
+        {
+          console.log('axio.get:',res.data);
+          this.setState({isAuthenticated:res.data});
+        })
+      .catch(error => {console.log("axios.get error");});
+    };
+    handleAuthChange(status)
+    {
+      console.log('status', status);
+      console.log("this.location", this.location);
+      this.setState({isAuthenticated:status});
+      console.log('this.isAuthenticated(main)',this.isAuthenticated);
     }
     render()
     {
@@ -34,10 +52,10 @@ import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from
               <Switch>
                 <Route path="/" exact render={(props)=> <Newsfeed/>}/>
                 <Route path="/search" render={(props)=><Searchbar/>}/>
-                <PrivateRoute auth={this.state.isAuthenticated} path="/profile" component={Public}/>
+                <PrivateRoute authStatus={this.state.isAuthenticated} authCheck={this.handleAuthChange} path="/profile" component={Timeline}/>
                 <Route path="/register" render={(props)=><Signup/>}/>
-                <Route path="/login" render={props=><Login state={this.state.isAuthenticated}{...props}/>}/>
-                //<Route component= {Newsfeed}/>
+                <Route path="/login"  render={(props)=> <Login state={this.state.isAuthenticated} authCheck={this.handleAuthChange}{...props}/>}/>
+
               </Switch>
           </div>
         </Router>
@@ -48,28 +66,15 @@ import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from
 }
 const AlreadyLoggedIn = () => <h3>You already logged in!</h3>;
 const Public = () => <h3>Please log in..</h3>;
- function showData(data){
-   console.log('showData',data);
- }
 
-function checkAuth()  {
-  const buildResult = (succeeded: boolean) => ({ succeeded});
-
-  var isAuthenticated = false;
-    axios.get('auth/login')
-    .then(res =>buildResult(res.data)).then(res => {
-        isAuthenticated = res.data ;
-        showData(isAuthenticated);
-        return isAuthenticated;
-      })
-      console.log('buildResult:',buildResult);
-};
 class Login extends React.Component {
   constructor(props)
   {
     super(props);
+    console.log('login Props:', props);
     this.state = {
       redirectToReferrer: (false || props.state.isAuthenticated),
+      isAuthenticated: props.state,
       username:'', password: ''
     };
   }
@@ -79,8 +84,9 @@ class Login extends React.Component {
     console.log("handleSubmit")
     var username= this.state.username,password= this.state.password;
     axios.post(`auth/login`, { username, password })
-    .then(res => { console.log(res.data);
-      this.setState({ redirectToReferrer: res.data });
+    .then(res => { console.log('logged in successful? ',res.data);
+      this.props.authCheck(res.data);
+      this.setState({ redirectToReferrer: res.data,  isAuthenticated: res.data});
     });
     }
 
@@ -118,21 +124,12 @@ class Login extends React.Component {
     );
   }
 }
-
-const PrivateRoute = ({ component: Component,auth, ...rest}) => (
-  <Route
-    {...rest}
-    render={(props) => auth === true ? (
-        <Component {...props} />
-      ) : (
-        <Redirect
-          to={{
-            pathname: "/login",
-            state: { from: props.location }
-          }}
-        />
-      )
-    }
-  />
+function showData(data) {
+  return console.log ('showData:', data);
+}
+const PrivateRoute = ({ component: Component,authStatus,authCheck, ...rest}) => (
+showData(authStatus),
+  <Route {...rest} render={(props) => authStatus === true ? ( <Component state = {authStatus} authCheck= {authCheck}{...props} />)
+    : (<Redirect to={{pathname: "/login", state: { from: props.location },}}/>)}/>
 );
 export default withRouter(Main);

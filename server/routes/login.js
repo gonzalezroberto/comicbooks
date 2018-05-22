@@ -15,7 +15,7 @@ router.get('/login', function(req,res, next){
   res.json(typeof req.session.passport !== 'undefined' && req.session.passport !== null);
 });
 router.get('/logout', function(req,res, next){
-  req.logout();
+  req.session.destroy();
   res.json(false);
 });
 

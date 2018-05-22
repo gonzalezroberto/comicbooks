@@ -6,19 +6,13 @@ import { BrowserRouter } from 'react-router-dom';
 import { Route, Redirect,Switch, withRouter } from 'react-router'
 
 class Timeline extends React.Component {
-constructor(){
-  super();
-  this.state = {accounts:[], loggedIn:''};
+constructor(props){
+  super(props);
+  this.state = {accounts:[], isAuthenticated:props.isAuthenticated};
 }
 
 componentWillMount(){
-  var user = {
-    first:'',
-    last:'',
-    id: '',
-    username: '',
-    pic: ''
-  }
+  var user = {first:'',last:'',id: '',username: '',pic: ''}
   axios.get('/api/getuser')
       .then(res =>{
         user.first = res.data.firstname;
@@ -26,24 +20,22 @@ componentWillMount(){
         user.id = res.data.id;
         user.username = res.data.username;
         user.pic = res.data.profilepicture;
-        console.log('user:',user);
         this.setState({accounts: [user]});
-        console.log('isarray?: ', Array.isArray(this.state.accounts))
     });
 }
 makePost(){
   this.props.router.push('/makepost');
 }
-// makeComment(){
-// }
 logout()
 {
-  axios.get('api/logout').then( res =>
-  {this.setState({loggedIn:res})
-}).then(()=> {return window.location.href='/login';});
+  axios.get('auth/logout').then( res =>
+  {
+    console.log('logout:', res.data)
+    this.setState({isAuthenticated:res.data})
+}).then(() => this.props.authCheck(false));
 }
 render()
-{ console.log('this.state.accounts: ', this.state.accounts)
+{
   return(
     <div className = "pageContainer">
       <div className = "row">
@@ -107,7 +99,7 @@ render()
   )
 }
 }
-export default Timeline;
+export default withRouter(Timeline);
 
 const User = (props) =>
 {
