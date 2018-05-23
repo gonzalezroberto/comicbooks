@@ -9,6 +9,11 @@ input {
   border: 3px solid steelblue;
   color: steelblue;
 }
+li searchres
+{
+  background-color: #000;
+}
+
 ul2 {
   margin: 0;
   padding: 0;
@@ -27,9 +32,16 @@ li {
 li:hover {
   background-color: beige;
 }
-img {
+img searchpic{
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 5px;
   width: 175px;
+  float: left;
+}
+pp
+{
+  font-size: 20px;
+  font-family: sans-serif;
+
 }

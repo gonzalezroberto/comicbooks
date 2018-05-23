@@ -1,9 +1,10 @@
 img  {
   height : 250px;
- width:400px;
+ width:auto;
  float:none;
- margin-left: 1em;
+ margin-left: 20em;
  border:1px solid #FFF;
+ margin: 0 auto;
 }
 a{
   color: #000;

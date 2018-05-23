@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import "../stylesheets/Searchbar.css";
 import Comicbook from "../Components/Comicbook"
-const Item = ({item}) =>  <li><a href={'/' + item.cid}> {item.title} by {item.writers} </a> <a href={"/"+item.cid}> <img src={item.coverArt}/> </a> </li>
+const Item = ({item}) =>  <li alt="searchres"><a href={'/' + item.cid} > <pp>{item.title}</pp> by {item.writers} </a> <a href={"/"+item.cid}> <img src={item.coverArt} alt="searchpic"/> </a> </li>
 //const Item = ({item}) =>  <li><a href={'/comic/'+ String(item.id)}> {item.title} by {item.writers} </a> <a href={'/comic/'+String(item.id)}> <img src={item.coverArt}/> </a> </li>
 const List = ({items,query}) => {
   let filteredItems = items.filter( item => item.title.includes(query));
