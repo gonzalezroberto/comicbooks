@@ -3,19 +3,18 @@ import React from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Link} from 'react-router-dom'
 class Signup extends React.Component {
-  constructor()
+  constructor(props)
   {
-    super();
-    this.state = {  email: '',pass: '',firstname: '',lastname: ''
-    }
+    super(props);
+    this.state = {  username: '',pass: '',firstname: '',lastname: '', isAuthenticated:(false || props.state) }
   }
   handleSubmit = event => {
-      var username= this.state.email,
+      var username= this.state.username,
           pass = this.state.pass,
           firstname= this.state.firstname,
           lastname=this.state.lastname
-          console.log('email, pass, firstname, lastname', username, pass, firstname, lastname)
-    axios.post(`api/signup`, { username, pass, firstname,lastname })
+          console.log('username, pass, firstname, lastname', username, pass, firstname, lastname)
+    axios.post(`send/signup`, { username, pass, firstname,lastname })
       .then(res => {
         alert(res.data);
       }).catch(error => {console.log("error")});
@@ -48,7 +47,7 @@ const signupform =(props) =>
         <input className ="email"
         type ="text"
         placeholder ="username"
-        onChange = {event => props.setState({email: event.target.value})}
+        onChange = {event => props.setState({username: event.target.value})}
         />
         <input className ="password"
         type ="password"

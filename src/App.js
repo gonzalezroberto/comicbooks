@@ -47,7 +47,7 @@ import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from
                 <Route exact path="/" exact render={(props)=> <Newsfeed/>}/>
                 <Route exact path="/search" render={(props)=><Searchbar/>}/>
                 <PrivateRoute authStatus={this.state.isAuthenticated} authCheck={this.handleAuthChange} exact path="/profile" component={Timeline}/>
-                <Route path="/register" render={(props)=><Signup/>}/>
+                <Route path="/register" render={(props)=><Signup state={this.state.isAuthenticated} authCheck={this.handleAuthChange}{...props}/>}/>
                 <Route exact path="/login"  render={(props)=> <Login state={this.state.isAuthenticated} authCheck={this.handleAuthChange}{...props}/>}/>
               <Route exact path="/:id"  render={(props) =><ComicProfile  authCheck={this.handleAuthChange}{...props}/>}/>
 

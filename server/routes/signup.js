@@ -14,20 +14,19 @@ var pool  = mysql.createPool({
 
 router.post('/signup', function(req, res, next) {
   var user = req.body;
-  var email=user.email,pass=user.pass,first=user.firstname,last=user.lastname;
+  var username=user.username,pass=user.pass,first=user.firstname,last=user.lastname;
   pool.getConnection(function(err, connection) {
-    connection.query('SELECT * FROM accounts WHERE username= ?', [email],
+    connection.query('SELECT * FROM accounts WHERE username= ?', [username],
     function (error, results, fields) {
       if (error) throw error;
-      if (Object.keys(JSON.stringify(results)).length == 2){ //if account does not exist
+      if (results.length === 0){ //if account does not exist
         connection.query('INSERT INTO accounts (firstname,lastname, username, password) \
-        VALUES (?,?,?,?)', [first, last, email, pass], function (error, results, fields) {
+        VALUES (?,?,?,?)', [first, last, username, pass], function (error, results, fields) {
           if (error) throw error;
+          console.log(results)
         });
-
-        console.log("Account created!");
-        res.send("Account Created");
-          }else{console.log("Account already exists!");}
+        res.send("Account Created!");
+      }else{ res.send("Account already exists!");}
         connection.release();
         });});});
 
