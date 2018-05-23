@@ -21,4 +21,21 @@ router.get('/comics', function(req, res, next) {
     });
   });
 });
+router.post('/comics', function(req, res, next) {
+  var id = req.body.comicId
+  console.log('post id: ' , id)
+  pool.getConnection(function(err, connection) {
+    connection.query('SELECT * FROM comics WHERE cid = ?;', [id], function (error, results, fields) {
+      console.log('results',results);
+      if(results.length !==0)
+      {
+        console.log('comic results:', results);
+        res.json(results[0]);
+      }
+      else{res.json(false)}
+      connection.release();
+      if (error) throw error;
+    });
+  });
+});
 module.exports = router;

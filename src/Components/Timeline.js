@@ -23,9 +23,6 @@ componentWillMount(){
         this.setState({accounts: [user]});
     });
 }
-makePost(){
-  this.props.router.push('/makepost');
-}
 logout()
 {
   axios.get('auth/logout').then( res =>

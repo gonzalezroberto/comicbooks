@@ -2,6 +2,7 @@ import Newsfeed from './Components/Newsfeed';
 import Signup from './Components/Signup';
 import Searchbar from './Components/Searchbar';
 import Timeline from './Components/Timeline';
+import ComicProfile from './Components/ComicProfile';
 import axios from 'axios';
 import "./App.css"
 import React from 'react'
@@ -39,16 +40,16 @@ import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from
                 <Link to="/search">Search </Link>
                 <Link to="/profile">Profile </Link>
                 <Link to="/login">Login </Link>
-                <Link to="/register">Signup </Link>
               </ul>
               </nav>
               </header>
               <Switch>
-                <Route path="/" exact render={(props)=> <Newsfeed/>}/>
-                <Route path="/search" render={(props)=><Searchbar/>}/>
-                <PrivateRoute authStatus={this.state.isAuthenticated} authCheck={this.handleAuthChange} path="/profile" component={Timeline}/>
+                <Route exact path="/" exact render={(props)=> <Newsfeed/>}/>
+                <Route exact path="/search" render={(props)=><Searchbar/>}/>
+                <PrivateRoute authStatus={this.state.isAuthenticated} authCheck={this.handleAuthChange} exact path="/profile" component={Timeline}/>
                 <Route path="/register" render={(props)=><Signup/>}/>
-                <Route path="/login"  render={(props)=> <Login state={this.state.isAuthenticated} authCheck={this.handleAuthChange}{...props}/>}/>
+                <Route exact path="/login"  render={(props)=> <Login state={this.state.isAuthenticated} authCheck={this.handleAuthChange}{...props}/>}/>
+              <Route exact path="/:id"  render={(props) =><ComicProfile  authCheck={this.handleAuthChange}{...props}/>}/>
 
               </Switch>
           </div>
@@ -67,8 +68,8 @@ class Login extends React.Component {
     super(props);
     console.log('login Props:', props);
     this.state = {
-      redirectToReferrer: (false || props.state),
-      isAuthenticated: props.state,
+      redirectToReferrer: false,
+      isAuthenticated: false,
       username:'', password: ''
     };
   }
@@ -76,6 +77,7 @@ class Login extends React.Component {
     axios.get('/auth/login')
       .then(res =>{
           this.setState({isAuthenticated:res.data, redirectToReferrer:res.data});
+          console.log('isauthinlogin', this.isAuthenticated);
       }).catch(err => console.log(err));
   };
   handleSubmit = event => {
@@ -97,13 +99,12 @@ class Login extends React.Component {
     return this.state.username.length > 0 && this.state.password.length > 0;
   }
   render() {
-    const { from } = this.props.location.state || { from: { pathname: "/" } };
+    const { from } = this.props.location.state || { from: { pathname: "/profile" } };
     const { redirectToReferrer } = this.state;
 
     if (redirectToReferrer) {
       return <Redirect to={from} />;
     }
-
     return (
       <div>
         <p>You must log in to view the page at {from.pathname}</p>

@@ -42,6 +42,7 @@ app.use('/api', index);
 app.use('/auth', login);
 app.use('/send', signup);
 app.use('/data', comics);
+app.use('/comic', comics);
 app.get('/*', function (req, res) {
    res.sendFile(path.join(__dirname, 'build', 'index.html'));
  });

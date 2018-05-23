@@ -47,7 +47,7 @@ const signupform =(props) =>
         />
         <input className ="email"
         type ="text"
-        placeholder ="email"
+        placeholder ="username"
         onChange = {event => props.setState({email: event.target.value})}
         />
         <input className ="password"

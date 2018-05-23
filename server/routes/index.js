@@ -12,6 +12,19 @@ var pool  = mysql.createPool({
   database : 'heroku_f8d562e61e70440'
 });
 
+router.post('/makepost', function(req, res, next) {
+  pool.getConnection(function(err, connection) {
+    var userid = 82;
+    var dataposted = new Date();
+    connection.query("insert into " + String(userid) + "posts (content, dateposted) values (" + '\''+ "I think I made it work now."/*String(content)*/ + '\'' + "," + '\''+ String(dateposted) +'\''+ ");", function (error, results, fields) {
+      //return res.json(results)
+      // And done with the connection.
+      connection.release();
+      if (error) throw error;
+    });
+  });
+});
+
 router.get('/loadposts', function(req, res, next) {
   pool.getConnection(function(err, connection) {
     // Use the connection
@@ -36,7 +49,7 @@ router.get('/makepost', function(req, res, next) {
     var dataposted = new Date();
 
     connection.query("insert into " + String(userid) + "posts (content, dateposted) values (" + String(content) + "," + String(dateposted) + ");", function (error, results, fields) {
-      return res.json(results)
+       res.json(results)
       // And done with the connection.
       connection.release();
       // Handle error after the release.
@@ -65,7 +78,7 @@ router.get('/loadnews', function(req, res, next) {
 pool.getConnection(function(err, connection) {
 // Use the connection
 connection.query("select * from newsfeed order by id DESC", function (error, results, fields) {
-  return res.json(results)
+  res.json(results)
   connection.release();
   if (error) throw error;
 

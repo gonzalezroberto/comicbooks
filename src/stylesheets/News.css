@@ -1,40 +1,51 @@
-img {
-  height : 300px;
- width: 500px;
- float:left;
- border:1px solid #FFF
+img  {
+  height : 250px;
+ width:400px;
+ float:none;
+ margin-left: 1em;
+ border:1px solid #FFF;
 }
-
+a{
+  color: #000;
+  text-decoration: none;
+}
+a:hover{
+  color: grey;
+}
 p
 {
   padding:1em 1em;
 }
+p1
+{
+  font-style: italic;
+  font-variant: small-caps;
+  font-size: 20px;
+  font-family: sans-serif;
+}
 .row
 {
   position: relative;
-  float:left;
+  clear: left;
 }
 h5
 {
-  font-size:20px;
-  text-align: justify;
-  text-align:center;
-  padding:1em 1em;
-  text-decoration: none;
+
+  font-size:25px;
+  padding:0em 0em;
+  color: #000;
 }
-.date
+.title
 {
-  font-family: sans-serif;
-  font-size: 20px;
-  color: grey;
-  font-weight: bold;
-  padding-left: 6em;
-
+  float: none;
 }
-.title{
-
+.title-area{
+  margin: auto;
 }
-.date-area
+.row
 {
-
+ background-color: #D6D7D7;
+ padding: 1em 1em 1em;
+ margin: 1em 1em 1em;
+ border: 4px solid #000;
 }

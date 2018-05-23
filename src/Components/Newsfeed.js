@@ -11,7 +11,7 @@ class Newsfeed extends Component {
   }
   componentWillMount(){
     axios.get('/api/loadnews')
-      .then(res =>{
+      .then(res =>{ console.log(res.data)
         this.setState({news:res.data});
       }).catch(err => console.log(err));
   };
