@@ -10,7 +10,7 @@ class ComicProfile extends Component {
     this.state = { comic:'', isAuthenticated:props.state};
   }
   componentWillMount(){
-      axios.get('auth/login')
+      axios.get('/data/login')
         .then(res =>{
             this.setState({isAuthenticated:res.data});
         }).catch(err => console.log(err));

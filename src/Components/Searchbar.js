@@ -2,7 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import "../stylesheets/Searchbar.css";
 import Comicbook from "../Components/Comicbook"
-const Item = ({item}) =>  <li alt="searchres"><a href={'/' + item.cid} > <pp>{item.title}</pp> by {item.writers} </a> <a href={"/"+item.cid}> <img src={item.coverArt} alt="searchpic"/> </a> </li>
+import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from 'react-router-dom'
+const Item = ({item}) =>  <li alt="searchres"><Link to={'/comic/' + item.cid} > <pp>{item.title}</pp> by {item.writers} </Link> <Link to={"/comic/"+item.cid}> <img src={item.coverArt} alt="searchpic"/> </Link> </li>
 //const Item = ({item}) =>  <li><a href={'/comic/'+ String(item.id)}> {item.title} by {item.writers} </a> <a href={'/comic/'+String(item.id)}> <img src={item.coverArt}/> </a> </li>
 const List = ({items,query}) => {
   let filteredItems = items.filter( item => item.title.includes(query));

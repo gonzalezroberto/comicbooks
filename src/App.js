@@ -3,6 +3,7 @@ import Signup from './Components/Signup';
 import Searchbar from './Components/Searchbar';
 import Timeline from './Components/Timeline';
 import ComicProfile from './Components/ComicProfile';
+import NewsProfile from './Components/NewsProfile';
 import axios from 'axios';
 import "./App.css"
 import React from 'react'
@@ -16,8 +17,11 @@ import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from
       console.log("in Main");
       this.handleAuthChange = this.handleAuthChange.bind(this);
     }
-    componentWillMount(){
-      axios.get('auth/login')
+    componentDidMount(){
+      axios.get('auth/login' ,{
+      url: 'http://localhost:3000',
+      responseType: 'stream'
+      })
       .then( res =>
         { console.log('axio.get:',res.data);
           this.setState({isAuthenticated:res.data});  })
@@ -49,7 +53,8 @@ import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from
                 <PrivateRoute authStatus={this.state.isAuthenticated} authCheck={this.handleAuthChange} exact path="/profile" component={Timeline}/>
                 <Route path="/register" render={(props)=><Signup state={this.state.isAuthenticated} authCheck={this.handleAuthChange}{...props}/>}/>
                 <Route exact path="/login"  render={(props)=> <Login state={this.state.isAuthenticated} authCheck={this.handleAuthChange}{...props}/>}/>
-              <Route exact path="/:id"  render={(props) =><ComicProfile  authCheck={this.handleAuthChange}{...props}/>}/>
+              <Route exact path="/comic/:id"  render={(props) =><ComicProfile  authCheck={this.handleAuthChange}{...props}/>}/>
+              <Route exact path="/news/:id"  render={(props) =><NewsProfile/>}/>
 
               </Switch>
           </div>
@@ -68,16 +73,17 @@ class Login extends React.Component {
     super(props);
     console.log('login Props:', props);
     this.state = {
-      redirectToReferrer: false,
-      isAuthenticated: false,
+      redirectToReferrer: false || props.state,
+      isAuthenticated: false || props.state,
       username:'', password: ''
     };
   }
   componentWillMount(){
     axios.get('/auth/login')
       .then(res =>{
+        console.log('res:',res)
           this.setState({isAuthenticated:res.data, redirectToReferrer:res.data});
-          console.log('isauthinlogin', this.isAuthenticated);
+          console.log('isauthinlogin', this.state.isAuthenticated);
       }).catch(err => console.log(err));
   };
   handleSubmit = event => {

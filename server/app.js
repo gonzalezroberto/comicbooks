@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const index = require('./routes/index');
 const login = require('./routes/login');
+const news = require('./routes/news');
 const signup = require('./routes/signup');
 const comics = require('./routes/comics');
 const passport = require('passport');
@@ -39,6 +40,7 @@ app.use(session({
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use('/api', index);
+app.use('/news', news);
 app.use('/auth', login);
 app.use('/send', signup);
 app.use('/data', comics);
