@@ -12,6 +12,7 @@ var pool  = mysql.createPool({
 });
 var passport = require('passport');
 router.get('/login', function(req,res, next){
+  console.log('req', req);
   res.json(typeof req.session.passport !== 'undefined' && req.session.passport !== null);
 });
 router.get('/logout', function(req,res, next){

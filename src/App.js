@@ -1,7 +1,7 @@
 import Newsfeed from './Components/Newsfeed';
 import Signup from './Components/Signup';
 import Searchbar from './Components/Searchbar';
-import Timeline from './Components/Timeline';
+import Profile from './Components/Profile';
 import ComicProfile from './Components/ComicProfile';
 import NewsProfile from './Components/NewsProfile';
 import axios from 'axios';
@@ -19,7 +19,7 @@ import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from
     }
     componentDidMount(){
       axios.get('auth/login' ,{
-      baseURL: 'http://fizzcomics.herokuapp.com/',
+      baseURL: 'http://localhost:3000',
       responseType: 'stream'
       })
       .then( res =>
@@ -50,13 +50,14 @@ import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from
               <Switch>
                 <Route exact path="/" exact render={(props)=> <Newsfeed/>}/>
                 <Route exact path="/search" render={(props)=><Searchbar/>}/>
-                <PrivateRoute authStatus={this.state.isAuthenticated} authCheck={this.handleAuthChange} exact path="/profile" component={Timeline}/>
+                <PrivateRoute authStatus={this.state.isAuthenticated} authCheck={this.handleAuthChange} exact path="/profile" component={Profile}/>
                 <Route path="/register" render={(props)=><Signup state={this.state.isAuthenticated} authCheck={this.handleAuthChange}{...props}/>}/>
                 <Route exact path="/login"  render={(props)=> <Login state={this.state.isAuthenticated} authCheck={this.handleAuthChange}{...props}/>}/>
               <Route exact path="/comic/:id"  render={(props) =><ComicProfile  authCheck={this.handleAuthChange}{...props}/>}/>
               <Route exact path="/news/:id"  render={(props) =><NewsProfile/>}/>
 
               </Switch>
+
           </div>
         </Router>
       )
@@ -79,7 +80,7 @@ class Login extends React.Component {
     };
   }
   componentWillMount(){
-    axios.get('/auth/login')
+    axios.get('/auth/login') // authenticing
       .then(res =>{
         console.log('res:',res)
           this.setState({isAuthenticated:res.data, redirectToReferrer:res.data});

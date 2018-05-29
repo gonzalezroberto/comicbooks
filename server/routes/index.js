@@ -25,22 +25,6 @@ router.post('/makepost', function(req, res, next) {
   });
 });
 
-router.get('/loadposts', function(req, res, next) {
-  pool.getConnection(function(err, connection) {
-    // Use the connection
-    var userid = 82;
-    connection.query("select * from " + String(userid) + "posts order by id DESC", function (error, results, fields) {
-      return res.json(results)
-      // And done with the connection.
-      connection.release();
-      // Handle error after the release.
-      if (error) throw error;
-      // Don't use the connection here, it has been returned to the pool.
-    });
-  });
-});
-
-
 router.get('/makepost', function(req, res, next) {
   pool.getConnection(function(err, connection) {
     // Use the connection
