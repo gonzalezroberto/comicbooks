@@ -66,7 +66,7 @@ class Timeline extends React.Component {
   constructor(props) {
     super(props);
     console.log(props);
-    this.state = { posts: props.state.posts || [], newPost:''};
+    this.state = { posts: props.state.posts, newPost:''};
   }
 componentWillMount(){
   axios.get('loadposts')
@@ -82,7 +82,7 @@ componentWillMount(){
     .catch(err => console.log(err));
 
     axios.get('loadposts')
-        .then((res) =>{
+        .then((res) => {
           console.log('post data:',res.data)
           this.setState({posts: res.data});
       });

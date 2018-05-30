@@ -31,7 +31,7 @@ componentWillMount(){
 search = e => this.setState({ query: this.searchEl.value });
 render = () => (
     <div>
-        <input onChange={this.search} ref={ el => this.searchEl = el } />
+        <input className="searchbar"onChange={this.search} ref={ el => this.searchEl = el } />
         <List {...this.state} />
     </div>
 )

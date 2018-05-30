@@ -40,9 +40,19 @@ nav {
   margin-left: 200px;
 
 }
-input{
-  width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
+.username
+{
+    width: 22%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      box-sizing: border-box;
+
+}
+.password
+{
+    width: 22%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      box-sizing: border-box;
+
 }
