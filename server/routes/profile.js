@@ -27,6 +27,25 @@ router.get('/loadposts', function(req, res, next) {
     });
   });
 });
+router.post('/makepost', function(req, res, next) {
+  pool.getConnection(function(err, connection) {
+    // Use the connection
+    var userid = 82; // get user id
+    //var userid = req.body.passport.user;   <---- this is the actual way to get user id from current user
+    var content = req.body.content;
+    var dateposted = new Date();
+    console.log("INSERT INTO " + String(userid) + "posts (content, dateposted) VALUES ('" + String(content)+"', '"+ String(dateposted) + "');");
+    connection.query("INSERT INTO " + String(userid) + "posts (content, dateposted) VALUES ('" + String(content)+"', '"+ String(dateposted) + "');", function (error, results, fields) {
+      console.log('results', results);
+       res.json(results)
+      // And done with the connection.
+      connection.release();
+      // Handle error after the release.
+      if (error) throw error;
+      // Don't use the connection here, it has been returned to the pool.
+    });
+  });
+});
 
 
 module.exports = router;

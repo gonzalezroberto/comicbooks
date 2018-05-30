@@ -1,6 +1,5 @@
 import React from 'react';
-
-const Posts = (props) =>{
+import "../stylesheets/Posts.css"
     console.log('props', props);
     // variables used for date format
     var date = props.posts.dateposted //Type: String; FORMAT: 2018-05-16T11:10:38.000Z

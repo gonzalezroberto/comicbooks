@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import "../stylesheets/Timeline.css"
+import "../stylesheets/Posts.css"
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Link, withRouter } from "react-router-dom";
 
@@ -23,11 +24,11 @@ componentWillMount(){
         this.setState({accounts: user});
         console.log(this.state.accounts.pic)
     });
-    axios.get('profile/loadposts')
-        .then(res =>{
-          console.log('post data:',res.data)
-          this.setState({posts: res.data});
-      });
+      axios.get('profile/loadposts')
+          .then(res =>{
+            console.log('post data:',res.data)
+            this.setState({posts: res.data});
+        });
 }
 render()
 {
@@ -61,17 +62,59 @@ render()
   </Router>)
 }
 }
-const Timeline =(props) =>{
-  console.log(props.state.posts)
-  return(
-  <div>
-    {props.state.posts.map(post => {return(<Posts key= {post.id} post= {post}/>)})}
-  <h2>this is where the timeline list goes</h2>
-  </div>
-);
+class Timeline extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log(props);
+    this.state = { posts: props.state.posts || [], newPost:''};
+  }
+componentWillMount(){
+  axios.get('loadposts')
+      .then(res =>{
+        console.log('post data:',res.data)
+        this.setState({posts: res.data});
+    });
+  };
+  handleSubmit = event => {
+    event.preventDefault();
+    var content = this.state.newPost;
+    axios.post(`makepost`, {content}).then(()=> {console.log("in handleSubmit")})
+    .catch(err => console.log(err));
+
+    axios.get('loadposts')
+        .then((res) =>{
+          console.log('post data:',res.data)
+          this.setState({posts: res.data});
+      });
+    }
+  validateForm() {
+    return this.state.newPost.length > 0;
+  }
+  render() {
+    return (
+      <div>
+        <form onSubmit={this.handleSubmit}>
+        <input className ="user-post"
+        type ="text"
+        placeholder ="What is on your mind?"
+        onChange = {(event) => this.setState({newPost: event.target.value})}
+         />
+
+       <button className ="submit" disabled={!this.validateForm()} type ="submit">Post</button>
+       </form>
+        {this.props.state.posts.map(post => {return(<Posts key= {post.id} post= {post}/>)})}
+      </div>
+  )
+};
+
 }
 const Posts =(props) =>{
-  return(<div> {props.post.dateposted}<h4>{props.post.content}</h4></div>);
+  return(
+    <div className="postblock">
+      {props.post.dateposted}
+      <h4>{props.post.content}</h4>
+      <button>comment</button>
+    </div>);
 }
 
 
