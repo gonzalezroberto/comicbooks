@@ -21,7 +21,8 @@ import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from
 
     componentDidMount(){
       axios.get('auth/login' ,{
-      baseURL: 'http://fizzcomics.herokuapp.com/',
+      baseURL: 'http://fizzcomics.herokuapp.com',
+      //baseURL: 'http://localhost:3000',
       responseType: 'stream'
       })
       .then( res =>
@@ -78,8 +79,8 @@ class Login extends React.Component {
     super(props);
     console.log('login Props:', props);
     this.state = {
-      redirectToReferrer: false || props.state,
-      isAuthenticated: false || props.state,
+      redirectToReferrer: props.state,
+      isAuthenticated: props.state,
       username:'', password: ''
     };
   }
@@ -88,6 +89,7 @@ class Login extends React.Component {
       .then(res =>{
         console.log('res:',res)
           this.setState({isAuthenticated:res.data, redirectToReferrer:res.data});
+          this.props.authCheck(res.data);
           console.log('isauthinlogin', this.state.isAuthenticated);
       }).catch(err => console.log(err));
   };
