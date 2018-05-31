@@ -9,6 +9,7 @@ const news = require('./routes/news');
 const signup = require('./routes/signup');
 const profile = require('./routes/profile');
 const comics = require('./routes/comics');
+const visitors = require('./routes/visitors');
 const passport = require('passport');
 var app = express();
 var session = require('express-session')
@@ -44,6 +45,7 @@ app.use('/api', index);
 app.use('/news', news);
 app.use('/auth', login);
 app.use('/profile', profile);
+app.use('/users', visitors);
 app.use('/send', signup);
 app.use('/data', comics);
 app.use('/comic', comics);

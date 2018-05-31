@@ -14,14 +14,14 @@ var pool  = mysql.createPool({
 
 router.post('/signup', function(req, res, next) {
   var user = req.body;
-  var username=user.username,pass=user.pass,first=user.firstname,last=user.lastname;
+  var username=user.username,pass=user.pass,first=user.firstname,last=user.lastname,pic="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png";
   pool.getConnection(function(err, connection) {
     connection.query('SELECT * FROM accounts WHERE username= ?', [username],
     function (error, results, fields) {
       if (error) throw error;
       if (results.length === 0){ //if account does not exist
-        connection.query('INSERT INTO accounts (firstname,lastname, username, password) \
-        VALUES (?,?,?,?)', [first, last, username, pass], function (error, results, fields) {
+        connection.query('INSERT INTO accounts (firstname,lastname, username, password, profilepicture) \
+        VALUES (?,?,?,?,?)', [first, last, username, pass, pic], function (error, results, fields) {
           if (error) throw error;
           console.log(results)
         });

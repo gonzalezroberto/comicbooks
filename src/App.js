@@ -4,6 +4,7 @@ import Searchbar from './Components/Searchbar';
 import Profile from './Components/Profile';
 import ComicProfile from './Components/ComicProfile';
 import NewsProfile from './Components/NewsProfile';
+import ProfileVisit from './Components/ProfileVisit';
 import axios from 'axios';
 import "./App.css"
 import React from 'react'
@@ -17,6 +18,7 @@ import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from
       console.log("in Main");
       this.handleAuthChange = this.handleAuthChange.bind(this);
     }
+
     componentDidMount(){
       axios.get('auth/login' ,{
       baseURL: 'http://fizzcomics.herokuapp.com/',
@@ -27,6 +29,7 @@ import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from
           this.setState({isAuthenticated:res.data});  })
       .catch(error => {console.log("axios.get error");});
     };
+
     handleAuthChange(status)
     {
       this.setState({isAuthenticated:status});
@@ -55,6 +58,7 @@ import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from
                 <Route exact path="/login"  render={(props)=> <Login state={this.state.isAuthenticated} authCheck={this.handleAuthChange}{...props}/>}/>
               <Route exact path="/comic/:id"  render={(props) =><ComicProfile  authCheck={this.handleAuthChange}{...props}/>}/>
               <Route exact path="/news/:id"  render={(props) =><NewsProfile/>}/>
+              <Route exact path="/users/:id"  render={(props) =><ProfileVisit {...props}/>}/>
 
               </Switch>
 

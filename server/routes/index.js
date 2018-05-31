@@ -46,8 +46,13 @@ router.get('/makepost', function(req, res, next) {
 router.get('/getuser', function(req, res, next) {
   pool.getConnection(function(err, connection) {
     // Use the connection
-    var id = 82; // get the id
-    connection.query('select * from accounts where id = ' + String(id), function (error, results, fields) {
+    console.log('getuser')
+    console.log('userid', req.session.passport.user)
+    var userid = req.session.passport.user
+
+    connection.query('select * from accounts where id = ?;',[userid], function (error, results, fields) {
+
+      console.log('results in getuser', results[0]);
       res.json(results[0]);
       // And done with the connection.
       connection.release();
