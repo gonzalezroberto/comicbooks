@@ -23,6 +23,7 @@ import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from
     componentDidMount(){
       axios.get('auth/login', {
       baseURL: 'http://localhost:3000'
+      //baseURL: 'http://localhost:3000'
       })
       .then( res =>
         { console.log('axio.get in main:',res.data);

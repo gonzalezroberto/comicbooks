@@ -12,6 +12,7 @@ var pool  = mysql.createPool({
   database : 'heroku_f8d562e61e70440'
 });
 router.get('/login', function(req,res, next){
+  console.log('visitors req.body', req.body)
   res.json(typeof req.session.passport !== 'undefined' && req.session.passport !== null);
 });
 router.post('/loadposts', function(req, res, next) {
