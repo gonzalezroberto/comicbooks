@@ -11,10 +11,13 @@ var pool  = mysql.createPool({
   password : 'f408fb6c',
   database : 'heroku_f8d562e61e70440'
 });
+router.get('/login', function(req,res, next){
+  res.json(typeof req.session.passport !== 'undefined' && req.session.passport !== null);
+});
 router.get('/loadfollowers', function(req, res, next) {
   pool.getConnection(function(err, connection) {
     var userid = req.session.passport.user;
-    connection.query("select * from connections where followee=?;", [userid], function (error, results, fields) {
+    connection.query("select * from conections where followed=?;", [userid], function (error, results, fields) {
       res.json(results)
       connection.release();
       if (error) throw error;
@@ -24,7 +27,7 @@ router.get('/loadfollowers', function(req, res, next) {
 router.get('/loadfollowing', function(req, res, next) {
   pool.getConnection(function(err, connection) {
     var userid = req.session.passport.user;
-    connection.query("select * from connections where follower=?;", [userid], function (error, results, fields) {
+    connection.query("select * from conections where follower=?;", [userid], function (error, results, fields) {
       res.json(results)
       connection.release();
       if (error) throw error;

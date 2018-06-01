@@ -11,7 +11,9 @@ var pool  = mysql.createPool({
   password : 'f408fb6c',
   database : 'heroku_f8d562e61e70440'
 });
-
+router.get('/login', function(req,res, next){
+  res.json(typeof req.session.passport !== 'undefined' && req.session.passport !== null);
+});
 router.post('/makepost', function(req, res, next) {
   pool.getConnection(function(err, connection) {
     var userid = 82;

@@ -14,9 +14,9 @@ class Timeline extends React.Component {
   }
 componentWillMount(){
   this.setState({posts:this.props.state.posts})
-  axios.get('loadposts')
+  axios.get('profile/loadposts')
       .then(res =>{
-        console.log('post data:',res.data)
+        console.log('post data in timeline:',res.data)
         this.setState({posts: res.data});
     });
   };
@@ -24,12 +24,12 @@ componentWillMount(){
   handleSubmit = event => {
     event.preventDefault();
     var content = this.state.newPost;
-    axios.post(`makepost`, {content}).then(()=> {console.log("in handleSubmit")})
+    axios.post(`profile/makepost`, {content}).then(()=> {console.log("in handleSubmit")})
     .catch(err => console.log(err));
 
-    axios.get('loadposts')
+    axios.get('profile/loadposts')
         .then((res) => {
-          console.log('post data:',res.data)
+          console.log('post data2 in timeline:',res.data)
           this.props.postChange(res.data);
           this.setState({posts: res.data});
       });
@@ -44,7 +44,7 @@ componentWillMount(){
         .then((res) => {
           console.log('deletepost data:',res.data)
       });
-      axios.get('loadposts')
+      axios.get('/loadposts')
           .then((res) => {
             console.log('post data:',res.data)
             //console.log('props', props)

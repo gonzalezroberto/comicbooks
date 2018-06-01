@@ -9,7 +9,7 @@ class ProfileVisit extends React.Component {
 constructor(props){
   console.log("visitor props", props);
   super(props);
-  this.state = {accounts:'', posts:[] ,followers:[], following:[], auth:'', id:props.match.params.id};
+  this.state = {accounts:'', posts:[] ,followers:[], following:[], auth:props.state, id:props.match.params.id};
   this.handlePostChange = this.handlePostChange.bind(this);
 }
 
@@ -29,7 +29,7 @@ componentWillMount(){
     });
     axios.get('login') // authenticing
       .then(res =>{
-        console.log('res:',res)
+        console.log('res in ProfileVisit:',res)
           this.setState({auth:res.data});
       }).catch(err => console.log(err));
 }
@@ -74,7 +74,7 @@ render()
       </div>
 
       <div style={{ flex: 1, padding: "10px" }}>
-          <Route exact path={this.props.match.url + '/timeline'}  render={(props) => <Timeline {...props}state={this.state}
+          <Route exact path={this.props.match.url + '/timeline'}  render={(props) => <Timeline {...props} state={this.state}
             makePost={this.makepost} postChange ={this.handlePostChange}/>} />
       </div>
     </div>

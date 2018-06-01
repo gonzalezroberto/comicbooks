@@ -20,6 +20,7 @@ router.get('/logout', function(req,res, next){
 });
 
 router.post('/login', function(req, res, next) {
+  console.log('auth/login req.body', req.body)
   var user = req.body;
   var username=user.username,pass=user.password;
 pool.getConnection(function(err, connection) {

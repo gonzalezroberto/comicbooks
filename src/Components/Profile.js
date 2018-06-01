@@ -10,7 +10,8 @@ import { BrowserRouter as Router, Route, Link, withRouter } from "react-router-d
 class Profile extends React.Component {
 constructor(props){
   super(props);
-  this.state = {accounts:'', followers:[], following:[], isAuthenticated:props.isAuthenticated};
+  console.log('profile props:', props);
+  this.state = {accounts:'', posts:[] ,followers:[], following:[], isAuthenticated:props.state};
   this.handlePostChange = this.handlePostChange.bind(this);
 }
 
@@ -32,16 +33,16 @@ componentWillMount(){
             console.log('post data:',res.data)
             this.setState({posts: res.data});
         });
-        axios.get('profile/loadfollowers')
-            .then(res =>{
-              console.log('users:',res.data)
-              this.setState({followers: res.data});
-          });
-          axios.get('profile/loadfollowing')
-              .then(res =>{
-                console.log('users:',res.data)
-                this.setState({following: res.data});
-            });
+        // axios.get('profile/loadfollowers')
+        //     .then(res =>{
+        //       console.log('users:',res.data)
+        //       this.setState({followers: res.data});
+        //   });
+        //   axios.get('profile/loadfollowing')
+        //       .then(res =>{
+        //         console.log('users:',res.data)
+        //         this.setState({following: res.data});
+        //     });
 
 }
 handlePostChange(status)

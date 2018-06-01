@@ -21,12 +21,11 @@ import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from
     }
 
     componentDidMount(){
-      axios.get('auth/login' ,{
-      baseURL: 'http://fizzcomics.herokuapp.com/',
-      //baseURL: 'http://localhost:3000',
+      axios.get('auth/login', {
+      baseURL: 'http://localhost:3000'
       })
       .then( res =>
-        { console.log('axio.get:',res.data);
+        { console.log('axio.get in main:',res.data);
           this.setState({isAuthenticated:res.data});  })
       .catch(error => {console.log("axios.get error");});
     };
@@ -60,7 +59,7 @@ import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from
                 <Route exact path="/login"  render={(props)=> <Login state={this.state.isAuthenticated} authCheck={this.handleAuthChange}{...props}/>}/>
               <Route exact path="/comic/:id"  render={(props) =><ComicProfile  authCheck={this.handleAuthChange}{...props}/>}/>
               <Route exact path="/news/:id"  render={(props) =><NewsProfile/>}/>
-              <Route exact path="/users/:id"  render={(props) =><ProfileVisit {...props}/>}/>
+              <Route exact path="/users/:id"  render={(props) =><ProfileVisit state={this.state.isAuthenticated} {...props}/>}/>
               <Route exact path="/users"  render={(props) =><Users {...props}/>}/>
               </Switch>
 
