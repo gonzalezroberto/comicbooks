@@ -3,6 +3,7 @@ import axios from 'axios';
 import "../stylesheets/Timeline.css"
 import "../stylesheets/Posts.css"
 import "../stylesheets/Profile.css"
+import Timeline from "./Timeline"
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Link, withRouter } from "react-router-dom";
 
@@ -31,6 +32,17 @@ componentWillMount(){
             console.log('post data:',res.data)
             this.setState({posts: res.data});
         });
+        axios.get('profile/loadfollowers')
+            .then(res =>{
+              console.log('users:',res.data)
+              this.setState({followers: res.data});
+          });
+          axios.get('profile/loadfollowing')
+              .then(res =>{
+                console.log('users:',res.data)
+                this.setState({following: res.data});
+            });
+
 }
 handlePostChange(status)
 {
@@ -69,7 +81,7 @@ render()
                 Logout
                 </button>
           <li>
-            <Link to={`${this.props.match.url}/timeline`}>Timeline</Link>
+            <Link to={`${this.props.match.url}/wall`}>Your Wall</Link>
           </li>
           <li>
             <Link to={`${this.props.match.url}/followers`}>Followers</Link>
@@ -81,13 +93,37 @@ render()
       </div>
 
       <div style={{ flex: 1, padding: "10px" }}>
-          <Route exact path={this.props.match.url + '/timeline'}  render={() => <Timeline state={this.state} postChange ={this.handlePostChange}/>} />
+          <Route exact path={this.props.match.url + '/'}  render={() => <Timeline state={this.state} postChange ={this.handlePostChange}/>} />
+          <Route exact path={this.props.match.url + '/wall'}  render={() => <Wall state={this.state} postChange ={this.handlePostChange}/>} />
+          <Route exact path={this.props.match.url + '/followers'}  render={() => <Users users={this.state.followers}/>} />
+          <Route exact path={this.props.match.url + '/following'}  render={() => <Users users={this.state.following}/>} />
       </div>
     </div>
   </Router>)
 }
 }
-class Timeline extends React.Component {
+class Users extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log('User props',props);
+    this.state = { users: props.users };
+  }
+  render() {
+    return (
+      <div>
+        {this.state.users.map(user => {return(<User key={user.id} users={this.state.users}/>)})}
+      </div>
+  )
+};
+}
+const User =(props) =>{
+  return(
+    <div className="userblock">
+      <img className="posterpic "src={props.users.posterpicture}/>
+      <h4>{props.users.username} ({props.users.lastname}, {props.users.firstname})</h4>
+    </div>);
+}
+class Wall extends React.Component {
   constructor(props) {
     super(props);
     console.log('props',props);

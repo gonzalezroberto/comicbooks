@@ -3,6 +3,7 @@ import Signup from './Components/Signup';
 import Searchbar from './Components/Searchbar';
 import Profile from './Components/Profile';
 import ComicProfile from './Components/ComicProfile';
+import Users from './Components/Users';
 import NewsProfile from './Components/NewsProfile';
 import ProfileVisit from './Components/ProfileVisit';
 import axios from 'axios';
@@ -46,6 +47,7 @@ import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from
               <ul className="navbar">
                 <Link to="/">Home </Link>
                 <Link to="/search">Search </Link>
+                <Link to="/users">Users </Link>
                 <Link to="/profile">Profile </Link>
                 <Link to="/login">Login </Link>
               </ul>
@@ -60,7 +62,7 @@ import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from
               <Route exact path="/comic/:id"  render={(props) =><ComicProfile  authCheck={this.handleAuthChange}{...props}/>}/>
               <Route exact path="/news/:id"  render={(props) =><NewsProfile/>}/>
               <Route exact path="/users/:id"  render={(props) =><ProfileVisit {...props}/>}/>
-
+              <Route exact path="/users"  render={(props) =><Users {...props}/>}/>
               </Switch>
 
           </div>

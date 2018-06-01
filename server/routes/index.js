@@ -24,7 +24,16 @@ router.post('/makepost', function(req, res, next) {
     });
   });
 });
-
+router.get('/loadusers', function(req, res, next) {
+  pool.getConnection(function(err, connection) {
+    var userid = req.session.passport.user;
+    connection.query("select * from accounts;", [userid], function (error, results, fields) {
+      res.json(results)
+      connection.release();
+      if (error) throw error;
+    });
+  });
+});
 router.get('/makepost', function(req, res, next) {
   pool.getConnection(function(err, connection) {
     // Use the connection
