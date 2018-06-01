@@ -22,9 +22,8 @@ import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from
 
     componentDidMount(){
       axios.get('auth/login' ,{
-      baseURL: 'http://fizzcomics.herokuapp.com',
+      baseURL: 'http://fizzcomics.herokuapp.com/',
       //baseURL: 'http://localhost:3000',
-      responseType: 'stream'
       })
       .then( res =>
         { console.log('axio.get:',res.data);
