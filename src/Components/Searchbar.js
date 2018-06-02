@@ -3,7 +3,14 @@ import axios from 'axios';
 import "../stylesheets/Searchbar.css";
 import Comicbook from "../Components/Comicbook"
 import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from 'react-router-dom'
-const Item = ({item}) =>  <li className="searchres"><Link to={'/comic/' + item.cid} > <pp>{item.title}</pp> by {item.writers} </Link> <Link to={"/comic/"+item.cid}> <img src={item.coverArt} alt="searchpic"/> </Link> </li>
+const Item = ({item}) =>
+<li className="searchres"><Link to={'/comic/' + item.cid} > </Link>
+  <Link to={"/comic/"+item.cid}> <img src={item.coverArt} className="searchpic"/>
+  <div className ="searchres"><h2 className="searchrestitle">{item.title} by {item.writers}</h2>
+  <container className="characters"> <h4>Characters: {item.characters}</h4><h5>Series: <Link to={"/series/"+item.series}>{item.series}</Link></h5></container>
+  </div>
+  </Link>
+    </li>
 //const Item = ({item}) =>  <li><a href={'/comic/'+ String(item.id)}> {item.title} by {item.writers} </a> <a href={'/comic/'+String(item.id)}> <img src={item.coverArt}/> </a> </li>
 const List = ({items,query}) => {
   let filteredItems = items.filter( item => item.title.toLowerCase().includes(query) || item.writers.toLowerCase().includes(query) || item.characters.toLowerCase().includes(query));

@@ -5,6 +5,7 @@ import "../stylesheets/Profile.css"
 import "../stylesheets/UsersOnProfile.css"
 import Timeline from "./Timeline"
 import UsersFollowed from "./UsersFollowed"
+import Changephoto from "./Changephoto"
 import UsersFollower from "./UsersFollowers"
 import Wall from "./Wall"
 import ReactDOM from 'react-dom';
@@ -73,7 +74,6 @@ render()
         <ul style={{ listStyleType: "none", padding: 0 }}>
           <h3>Welcome {this.state.accounts.first}!</h3>
           <img src={this.state.accounts.pic} />
-          <p className="changephoto"><Link className='changephotolink' to={`${this.props.match.url}/changephoto`}>change profile picture</Link></p>
           <h3>Name: {this.state.accounts.first} {this.state.accounts.last}</h3>
           <h7>username: @{this.state.accounts.username} </h7>
             <button className ="logout-button"
@@ -82,7 +82,8 @@ render()
                 >
                 Logout
                 </button>
-          <li>
+
+        <li>
             <Link to={`${this.props.match.url}/wall`}>Your Wall</Link>
           </li>
           <li>
@@ -90,6 +91,9 @@ render()
           </li>
           <li>
             <Link to={`${this.props.match.url}/following`}>Following</Link>
+          </li>
+          <li>
+            <Link to={`${this.props.match.url}/changephoto`}>Change Picture</Link>
           </li>
         </ul>
       </div>
@@ -100,7 +104,7 @@ render()
           <Route exact path={this.props.match.url + '/wall'}  render={() => <Wall state={this.state} postChange ={this.handlePostChange}/>} />
           <Route exact path={this.props.match.url + '/following'}  render={(props) => <UsersFollowed {...props} users={this.state.following}/>} />
           <Route exact path={this.props.match.url + '/followers'}  render={(props) => <UsersFollower {...props} users={this.state.followers}/>} />
-
+          <Route exact path={this.props.match.url + '/changephoto'}  render={(props) => <Changephoto {...props} users={this.state.followers}/>} />
       </Switch>
     </div>
     </div>

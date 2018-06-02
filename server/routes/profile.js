@@ -24,6 +24,17 @@ router.get('/loadfollowers', function(req, res, next) {
     });
   });
 });
+router.post('/changephoto', function(req, res, next) {
+  pool.getConnection(function(err, connection) {
+    var newImg=req.body.url
+    var userid = req.session.passport.user;
+    connection.query("UPDATE accounts SET profilepicture=? WHERE id=?", [newImg,userid], function (error, results, fields) {
+      res.json(results)
+      connection.release();
+      if (error) throw error;
+    });
+  });
+});
 router.get('/loadfollowing', function(req, res, next) {
   pool.getConnection(function(err, connection) {
     var userid = req.session.passport.user;

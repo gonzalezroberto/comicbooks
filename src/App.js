@@ -3,6 +3,7 @@ import Signup from './Components/Signup';
 import Searchbar from './Components/Searchbar';
 import Profile from './Components/Profile';
 import ComicProfile from './Components/ComicProfile';
+import SeriesProfile from './Components/SeriesProfile';
 import Users from './Components/Users';
 import NewsProfile from './Components/NewsProfile';
 import ProfileVisit from './Components/ProfileVisit';
@@ -60,6 +61,7 @@ import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from
                 <Route path="/register" render={(props)=><Signup state={this.state.isAuthenticated} authCheck={this.handleAuthChange}{...props}/>}/>
                 <Route exact path="/login"  render={(props)=> <Login state={this.state.isAuthenticated} authCheck={this.handleAuthChange}{...props}/>}/>
               <Route exact path="/comic/:id"  render={(props) =><ComicProfile  authCheck={this.handleAuthChange}{...props}/>}/>
+              <Route exact path="/series/:series"  render={(props) =><SeriesProfile  authCheck={this.handleAuthChange}{...props}/>}/>
               <Route exact path="/news/:id"  render={(props) =><NewsProfile/>}/>
               <Route exact path="/users/:id"  render={(props) =><ProfileVisit state={this.state.isAuthenticated} {...props}/>}/>
               <Route exact path="/users"  render={(props) =><Users {...props}/>}/>
