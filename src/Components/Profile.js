@@ -5,6 +5,7 @@ import "../stylesheets/Profile.css"
 import "../stylesheets/UsersOnProfile.css"
 import Timeline from "./Timeline"
 import UsersFollowed from "./UsersFollowed"
+import UsersFollower from "./UsersFollowers"
 import Wall from "./Wall"
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Link, withRouter, Switch } from "react-router-dom";
@@ -99,7 +100,9 @@ render()
           <Route exact path={this.props.match.url + '/'}  render={() => <Timeline state={this.state} postChange ={this.handlePostChange}/>} />
           <Route exact path={this.props.match.url + '/wall'}  render={() => <Wall state={this.state} postChange ={this.handlePostChange}/>} />
           <Route exact path={this.props.match.url + '/following'}  render={(props) => <UsersFollowed {...props} users={this.state.following}/>} />
-        </Switch>
+          <Route exact path={this.props.match.url + '/followers'}  render={(props) => <UsersFollower {...props} users={this.state.followers}/>} />
+
+      </Switch>
     </div>
     </div>
   </Router>

@@ -24,6 +24,21 @@ router.get('/comics', function(req, res, next) {
     });
   });
 });
+router.post('/submitcomic', function(req, res, next) {
+  var comic = req.body.comic;
+  console.log('comic',comic);
+  pool.getConnection(function(err, connection) {
+    connection.query("INSERT INTO comics (series, \
+      title, coverArt, publisher, datePublished, writers, coverArtists, editors,\
+    characters,synopsis) VALUES (?,?,?,?,?,?,?,?,?,?);",
+      [comic.series, comic.title, comic.img, comic.publisher,comic.datepublished, comic.writer, comic.artist, comic.editor, comic.characters,
+        comic.synopsis], function (error, results, fields) {
+      console.log('results',results);
+      res.json('cool');
+      if (error) throw error;
+    });
+  });
+});
 router.post('/comics', function(req, res, next) {
   var id = req.body.comicId
   console.log('post id: ' , id)

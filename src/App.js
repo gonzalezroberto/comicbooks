@@ -46,7 +46,7 @@ import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from
               <nav>
               <ul className="navbar">
                 <Link to="/">Home </Link>
-                <Link to="/search">Search </Link>
+                <Link to="/search">Catalog</Link>
                 <Link to="/users">Users </Link>
                 <Link to="/profile">Profile </Link>
                 <Link to="/login">Login </Link>

@@ -14,26 +14,49 @@ var pool  = mysql.createPool({
 router.get('/login', function(req,res, next){
   res.json(typeof req.session.passport !== 'undefined' && req.session.passport !== null);
 });
-router.get('/login', function(req,res, next){
-  res.json(typeof req.session.passport !== 'undefined' && req.session.passport !== null);
-});
 router.post('/getarticle', function(req, res, next) {
-pool.getConnection(function(err, connection) {
-// Use the connection
-console.log("id", req.body.newsId)
-connection.query("SELECT * FROM newsfeed WHERE id=?;", [req.body.newsId], function (error, results, fields) {
-  console.log(results)
-  res.json(results[0])
-  connection.release();
-  if (error) throw error;
-
-// And done with the connection.
-
-// Handle error after the release.
-
-// Don't use the connection here, it has been returned to the pool.
+  pool.getConnection(function(err, connection) {
+      connection.query("SELECT * FROM newsfeed WHERE id=?;", [req.body.newsId], function (error, results, fields) {
+        console.log(results)
+        res.json(results[0])
+        connection.release();
+        if (error) throw error;
+      });
+  });
 });
+router.post('/postcomment', function(req, res, next) {
+  var d = new Date();
+  var year=d.getFullYear(),month = d.getMonth()+1, day=d.getDate()
+  var date=month+"-"+day+"-"+year
+  var hour = d.getHours(), dayornight="am";
+  if(parseInt(hour) > 11){dayornight="pm";}
+  if(parseInt(hour) > 12){hour= (parseInt(hour)-12).toString()}
+  var min = (d.getMinutes()).toString()
+  if(min.length===1){min='0'+min;}
+  var time = hour+":"+min+dayornight;
+  pool.getConnection(function(err, connection) {
+    connection.query("select * from accounts where id=?;", [req.session.passport.user], function (error, result, fields) {
+      var posterInfo = result[0];
+      connection.query("insert into comments (newsid, commenterid, comment,date,time,posterpic,postername) values(?,?,?,?,?,?,?);",
+      [req.body.newsId,req.session.passport.user,req.body.comment,date,time,posterInfo.profilepicture,posterInfo.firstname],function (error, results, fields) {
+        console.log(results)
+        res.json(results)
+        connection.release();
+        if (error) throw error;
+      });
+    })
+  });
 });
+
+router.post('/getcomments', function(req, res, next) {
+  pool.getConnection(function(err, connection) {
+    connection.query("SELECT * FROM comments WHERE newsid=?;", [req.body.newsId], function (error, results, fields) {
+      console.log(results)
+      res.json(results)
+      connection.release();
+      if (error) throw error;
+    })
+  });
 });
 
 module.exports = router;

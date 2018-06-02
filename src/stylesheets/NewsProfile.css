@@ -1,0 +1,44 @@
+.newsCoverArt
+{
+border: 1px solid black;
+}
+.newstitle
+{
+  font-size: 40px;
+  font-family: serif;
+  color:black;
+  background-color: lightblue;
+}
+.news-block
+{
+  padding: 15px;
+}
+.commentblock
+{
+  background-color: lightgrey;
+  padding: 10px;
+}
+.commentform
+{
+}
+.comment-post
+{
+  width: 600px;
+}
+.comment
+{
+  background-color: white;
+  padding: 10px 10px 10px;
+  overflow: auto;
+}
+.posterpic
+{
+  width: 100px;
+  height: 100px;
+  clear: both;
+  float: left;
+}
+h4
+{
+  font-size: 20px;
+}

@@ -61,7 +61,6 @@ router.post('/makepost', function(req, res, next) {
     if(parseInt(hour) > 11){dayornight="pm";}
     if(parseInt(hour) > 12){hour= (parseInt(hour)-12).toString()}
     var min = (d.getMinutes()).toString()
-    console.log('len', min.length)
     if(min.length===1){
       min='0'+min;}
     var time = hour+":"+min+dayornight;
