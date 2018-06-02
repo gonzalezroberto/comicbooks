@@ -30,7 +30,7 @@ const signupform =(props) =>
   <div>
     <h2>Signup Form</h2>
     <form>
-        <input className ="firstname"
+        <p><input className ="firstname"
         type ="text"
         placeholder ="First Name"
         onChange = {event => props.setState({firstname: event.target.value})}
@@ -56,8 +56,9 @@ const signupform =(props) =>
         >
         Sign Up
       </button>
+    </p>
     </form>
   </div>
   );
-  
+
 export default Signup;

@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom';
 import "../stylesheets/Timeline.css"
 import "../stylesheets/Posts.css"
 import "../stylesheets/Profile.css"
+import UsersFollowed from "./UsersFollowed"
+import UsersFollower from "./UsersFollowers"
 import { BrowserRouter as Router, Route, Link, withRouter } from "react-router-dom";
 class ProfileVisit extends React.Component {
 constructor(props){
@@ -33,9 +35,19 @@ componentWillMount(){
       console.log('ProfileVisit login res:',res)
         this.setState({auth:res.data});
     }).catch(err => console.log(err));
-    axios.post('checkIfFollowed', {receiverid})
-    .then(res =>{this.setState({isFollowed:res.data})})
-      .catch(err => console.log(err));
+  axios.post('checkIfFollowed', {receiverid})
+  .then(res =>{this.setState({isFollowed:res.data})})
+    .catch(err => console.log(err));
+    axios.post('loadfollowers', {receiverid})
+        .then(res =>{
+          console.log('followers:',res.data)
+          this.setState({followers: res.data});
+      });
+    axios.post('loadfollowing',{receiverid})
+        .then(res =>{
+          console.log('following:',res.data)
+          this.setState({following: res.data});
+      });
 }
 validateUser() {
 
@@ -90,6 +102,8 @@ render()
       <div style={{ flex: 1, padding: "10px" }}>
           <Route exact path={this.props.match.url + '/timeline'}  render={(props) => <Timeline {...props} state={this.state}
             makePost={this.makepost} postChange ={this.handlePostChange}/>} />
+          <Route exact path={this.props.match.url + '/following'}  render={(props) => <UsersFollowed {...props} users={this.state.following}/>} />
+            <Route exact path={this.props.match.url + '/followers'}  render={(props) => <UsersFollower {...props} users={this.state.followers}/>} />
       </div>
     </div>
   </Router>)

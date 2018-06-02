@@ -28,6 +28,26 @@ router.post('/checkIfFollowed', function(req,res, next){
 })
 })
 })
+router.post('/loadfollowers', function(req, res, next) {
+  pool.getConnection(function(err, connection) {
+    var userid = req.body.receiverid;
+    connection.query("select * from conections where followed=?;", [userid], function (error, results, fields) {
+      res.json(results)
+      connection.release();
+      if (error) throw error;
+    });
+  });
+});
+router.post('/loadfollowing', function(req, res, next) {
+  pool.getConnection(function(err, connection) {
+    var userid = req.body.receiverid;
+    connection.query("select * from conections where follower=?;", [userid], function (error, results, fields) {
+      res.json(results)
+      connection.release();
+      if (error) throw error;
+    });
+  });
+});
 router.post('/follow', function(req, res, next) {
   pool.getConnection(function(err, connection) {
     console.log('follow req body', req.body);

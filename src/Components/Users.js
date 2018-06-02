@@ -29,7 +29,7 @@ class Users extends React.Component {
 const User = (props) =>{
   console.log('User func props', props);
   return(
-    <Link to={'/users/' + props.users.id} ><div className="userblock">
+    <Link className="link"to={'/users/' + props.users.id} ><div className="userblock">
       <img className="propic "src={props.users.profilepicture}/>
       <h3>{props.users.username} ({props.users.lastname}, {props.users.firstname})</h3>
     </div></Link>
