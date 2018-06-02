@@ -15,6 +15,41 @@ router.get('/login', function(req,res, next){
   console.log('visitors req.body', req.body)
   res.json(typeof req.session.passport !== 'undefined' && req.session.passport !== null);
 });
+router.post('/checkIfFollowed', function(req,res, next){
+  var followerid = req.session.passport.user, followedid = req.body.receiverid;
+  pool.getConnection(function(err, connection) {
+  connection.query("select * from conections where follower=? and followed=?;", [followerid,followedid], function (error, results, fields) {
+    console.log('checkIfFollowed resutls', results)
+    if (error) throw error;
+    if(results.length===0)
+      {res.json(false)}
+    else{res.json(true)};
+    connection.release();
+})
+})
+})
+router.post('/follow', function(req, res, next) {
+  pool.getConnection(function(err, connection) {
+    console.log('follow req body', req.body);
+    var followerid = req.session.passport.user, followedid = req.body.receiverid, followedInfo = req.body.receiverInfo;
+    connection.query("select * from accounts where id=?;", [followerid], function (error, result, fields) {
+      console.log('load followerid res', result)
+      var followerInfo = result[0];
+    connection.query("INSERT INTO conections (follower, \
+      followed, followerpic, followedpic, followername,followedname) \
+      VALUES (?,?,?,?,?,?);",
+      [followerid, followedid,followerInfo.profilepicture,
+        followedInfo.profilepicture, (followerInfo.firstname+' '+followerInfo.lastname),(followedInfo.firstname+' '+followedInfo.lastname)], function (error, results, fields) {
+      res.json(true)
+      // And done with the connection.
+      connection.release();
+      // Handle error after the release.
+      if (error) throw error;
+      // Don't use the connection here, it has been returned to the pool.
+    });
+    });
+  });
+});
 router.post('/loadposts', function(req, res, next) {
   pool.getConnection(function(err, connection) {
     // Use the connection

@@ -3,4 +3,30 @@
   width: 100px;
   height: 100px;
   float: left;
+  padding-bottom: 10px;
+}
+.userrow{
+  display: grid;
+  padding: 5px 10px ;
+  margin: 50px 200px;
+  border-radius: 10px;
+}
+.userblock
+{
+
+  border: 1px solid black;
+}
+.userblock:hover
+{
+  background-color: #1BB7F0;
+  border: 1px solid black;
+}
+h3
+{
+  font-family: sans-serif;
+  text-align: center;
+}
+Link
+{
+  text-decoration: none;
 }

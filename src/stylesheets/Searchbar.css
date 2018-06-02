@@ -20,7 +20,7 @@ ul2 {
   max-height: calc(100vh - 50px);
   overflow: auto;
 }
-li {
+.searchres {
   display: grid;
   color: 333;
   border: 1px solid #ccc;
@@ -29,7 +29,7 @@ li {
   border-radius: 3px;
   transition: background-color 0.2s;
 }
-li:hover {
+li.searchres:hover {
   background-color: beige;
 }
 img searchpic{

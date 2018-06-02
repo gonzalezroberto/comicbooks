@@ -36,7 +36,7 @@ router.get('/loadfollowing', function(req, res, next) {
 });
 router.get('/loadposts', function(req, res, next) {
   pool.getConnection(function(err, connection) {
-    // Use the connection
+    console.log('loadposts req', req)
     var userid = req.session.passport.user;   //<---- this is the actual way to get user id from current user
     connection.query("select * from posts where posterid=? and receiverid=?  order by postid DESC", [userid,userid], function (error, results, fields) {
       res.json(results)

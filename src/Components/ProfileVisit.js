@@ -9,16 +9,17 @@ class ProfileVisit extends React.Component {
 constructor(props){
   console.log("visitor props", props);
   super(props);
-  this.state = {accounts:'', posts:[] ,followers:[], following:[], auth:props.state, id:props.match.params.id};
+  this.state = {accounts:'',currentId:'',isFollowed:'', posts:[] ,followers:[], following:[], auth:props.state, id:props.match.params.id};
   this.handlePostChange = this.handlePostChange.bind(this);
+  this.follow = this.follow.bind(this);
 }
 
 componentWillMount(){
   var receiverid = this.props.match.params.id;
-  var loadid = this.props.match.params.id;
-  console.log('receiverid', receiverid);
+  this.setState({currentId:receiverid});
+  var loadid = receiverid;
   axios.post('getuser', {loadid})
-    .then(res =>{ console.log('get.user data:', res.data);
+    .then(res =>{
       this.setState({ accounts: res.data });
     }).catch(err => console.log(err));
 
@@ -27,11 +28,25 @@ componentWillMount(){
         console.log('loadpost visitor data:',res.data)
         this.setState({posts: res.data});
     });
-    axios.get('login') // authenticing
-      .then(res =>{
-        console.log('res in ProfileVisit:',res)
-          this.setState({auth:res.data});
-      }).catch(err => console.log(err));
+  axios.get('login')
+    .then(res =>{
+      console.log('ProfileVisit login res:',res)
+        this.setState({auth:res.data});
+    }).catch(err => console.log(err));
+    axios.post('checkIfFollowed', {receiverid})
+    .then(res =>{this.setState({isFollowed:res.data})})
+      .catch(err => console.log(err));
+}
+validateUser() {
+
+  return (this.state.auth && !this.state.isFollowed)
+}
+follow(){
+  var receiverid = this.state.currentId;
+  var receiverInfo = this.state.accounts;
+  axios.post('follow', {receiverid, receiverInfo})
+  .then(res => {console.log('follow res', res);this.setState({isFollowed:res.data})})
+
 }
 handlePostChange(status)
 {
@@ -59,8 +74,8 @@ render()
           <h3>{this.state.accounts.firstname} {this.state.accounts.lastname}</h3>
           <img src={this.state.accounts.profilepicture} />
           <p className="changephoto"><Link className='changephotolink' to={`${this.props.match.url}/changephoto`}>change profile picture</Link></p>
-          <h3>Name: {this.state.accounts.first} {this.state.accounts.last}</h3>
-          <h7>username: @{this.state.accounts.username} </h7>
+          Name: {this.state.accounts.first} {this.state.accounts.last}
+          <h7>username: @{this.state.accounts.username}</h7> <button className ="followbutton" onClick={this.follow} disabled={!this.validateUser()} type ="submit">follow+</button>
           <li>
             <Link to={`${this.props.match.url}/timeline`}>Timeline</Link>
           </li>
@@ -72,7 +87,6 @@ render()
           </li>
         </ul>
       </div>
-
       <div style={{ flex: 1, padding: "10px" }}>
           <Route exact path={this.props.match.url + '/timeline'}  render={(props) => <Timeline {...props} state={this.state}
             makePost={this.makepost} postChange ={this.handlePostChange}/>} />
@@ -134,13 +148,11 @@ class Timeline extends React.Component {
 
 }
 const Posts =(props) =>{
-  var time = props.post.time;
-  var date = (props.post.date).toString();
   var d = new Date();
+  var time = props.post.time, date = (props.post.date).toString();
   var year=d.getFullYear(),month = d.getMonth()+1, day=d.getDate()
   var todaysDate =month+"-"+day+"-"+year
-  if(date.localeCompare(todaysDate)===0)
-    {date =''}
+  if(date.localeCompare(todaysDate)===0){date =''}
   return(
     <div className="postblock">
       <j className="dateonpost">{time} {date}</j>

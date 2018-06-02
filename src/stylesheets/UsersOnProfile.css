@@ -1,0 +1,31 @@
+.followedpic
+{
+  width: 100px;
+  height: 100px;
+  padding-bottom: 4px;
+}
+.followed-block{
+  padding: 10px 5px;
+  border-radius: 10px;
+  border: 1px solid black;
+}
+.followedname
+{
+  float: right;
+  text-align: center;
+  color:black;
+  font-family:Arial, Helvetica, sans-serif;
+}
+.followedname:hover
+{
+  float: right;
+  text-align: center;
+  color:red;
+  font-family:Arial, Helvetica, sans-serif;
+}
+.followed-block:hover
+{
+  background-color: #1BB7F0;
+  text-decoration: none;
+  color:black;
+}

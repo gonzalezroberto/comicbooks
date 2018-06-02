@@ -6,18 +6,15 @@ class Signup extends React.Component {
   constructor(props)
   {
     super(props);
-    this.state = {  username: '',pass: '',firstname: '',lastname: '', isAuthenticated:(false || props.state) }
+    this.state = { username: '',pass: '',firstname: '',lastname: '', isAuthenticated:(false || props.state) }
   }
   handleSubmit = event => {
-      var username= this.state.username,
-          pass = this.state.pass,
-          firstname= this.state.firstname,
-          lastname=this.state.lastname
-          console.log('username, pass, firstname, lastname', username, pass, firstname, lastname)
-    axios.post(`send/signup`, { username, pass, firstname,lastname })
-      .then(res => {
-        alert(res.data);
-      }).catch(error => {console.log("error")});
+      var username= this.state.username,pass = this.state.pass,
+      firstname= this.state.firstname,lastname=this.state.lastname;
+      axios.post(`send/signup`, { username, pass, firstname,lastname })
+        .then(res => {
+          alert(res.data);
+        }).catch(error => {console.log("error")});
   }
   render() {
     var signupformcomp = signupform(this);
@@ -30,7 +27,6 @@ class Signup extends React.Component {
 }
 const signupform =(props) =>
 (
-
   <div>
     <h2>Signup Form</h2>
     <form>
@@ -63,5 +59,5 @@ const signupform =(props) =>
     </form>
   </div>
   );
-
+  
 export default Signup;

@@ -1,11 +1,11 @@
 import React from 'react';
 import axios from 'axios';
-import "../stylesheets/Timeline.css"
 import "../stylesheets/Posts.css"
+import Timeline from "./Timeline"
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Link, withRouter } from "react-router-dom";
 
-class Timeline extends React.Component {
+class Wall extends React.Component {
   constructor(props) {
     super(props);
     console.log('props',props);
@@ -14,9 +14,10 @@ class Timeline extends React.Component {
   }
 componentWillMount(){
   this.setState({posts:this.props.state.posts})
-  axios.get('profile/loadposts')
+  axios.get('loadposts')
       .then(res =>{
-        console.log('post data in timeline:',res.data)
+        console.log('post data in Wall cwm:',res.data)
+        this.props.postChange(res.data);
         this.setState({posts: res.data});
     });
   };
@@ -24,31 +25,32 @@ componentWillMount(){
   handleSubmit = event => {
     event.preventDefault();
     var content = this.state.newPost;
-    axios.post(`profile/makepost`, {content})
-    .then(()=> {console.log("in handleSubmit")})
+    axios.post(`makepost`, {content}).then(()=> {console.log("in handleSubmit")})
     .catch(err => console.log(err));
 
-    axios.get('profile/loadposts')
-    .then((res) => {
-    console.log('post data2 in timeline:',res.data)
-    this.props.postChange(res.data);
-    this.setState({posts: res.data});
-    });
-  }
+    axios.get('loadposts')
+        .then((res) => {
+          console.log('post data in HS in Wall:',res.data)
+          this.props.postChange(res.data);
+          this.setState({posts: res.data});
+      });
+    }
   validateForm() {
     return this.state.newPost.length > 0;
   }
   deletePost(objId)
   {
-    var postid = objId;
-    axios.post('profile/deletepost', {postid})
-    .then((res) => {
-      console.log('deletepost data:',res.data)
+    var postid= objId;
+    axios.post('deletepost', {postid})
+        .then((res) => {
+          console.log('deletepost data:',res.data)
       });
-      axios.get('profile/loadposts')
-      .then((res) => {
-        console.log('post data:',res.data)
-        this.setState({posts: res.data});
+      axios.get('loadposts')
+          .then((res) => {
+            console.log('post data delete:',res.data)
+            //console.log('props', props)
+            this.props.postChange(res.data);
+            this.setState({posts: res.data});
         });
   }
   render() {
@@ -65,15 +67,18 @@ componentWillMount(){
        </form>
         {this.state.posts.map(post => {return(<Posts key= {post.id} delete={this.deletePost} post= {post}/>)})}
       </div>
-  )};
-}
+  )
+};
 
+}
 const Posts =(props) =>{
+  var time = props.post.time;
+  var date = (props.post.date).toString();
   var d = new Date();
-  var time = props.post.time, date = (props.post.date).toString();
   var year=d.getFullYear(),month = d.getMonth()+1, day=d.getDate()
   var todaysDate =month+"-"+day+"-"+year
-  if(date.localeCompare(todaysDate)===0){date =''}
+  if(date.localeCompare(todaysDate)===0)
+    {date =''}
   return(
     <div className="postblock">
       <j className="dateonpost">{time} {date}</j>
@@ -83,5 +88,4 @@ const Posts =(props) =>{
       <button className ="delete-button" onClick={() => props.delete(props.post.postid)} type ="delete">delete post</button>
     </div>);
 }
-
-export default Timeline;
+export default Wall;

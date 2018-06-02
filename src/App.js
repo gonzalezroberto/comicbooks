@@ -38,6 +38,7 @@ import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from
     render()
     {
       return(
+        <div className="mainlayer">
         <Router>
             <div className ="main-background">
               <header>
@@ -65,15 +66,15 @@ import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from
               </Switch>
 
           </div>
+
         </Router>
+        <div className ="footer"><p className="footer-companyname">FizzBuzz LLC Copyright 2018 | 123 First Ave PO BOX #332</p></div>
+        </div>
       )
     }
 
 
 }
-const AlreadyLoggedIn = () => <h3>You already logged in!</h3>;
-const Public = () => <h3>Please log in..</h3>;
-
 class Login extends React.Component {
   constructor(props)
   {
@@ -96,15 +97,15 @@ class Login extends React.Component {
   };
   handleSubmit = event => {
     event.preventDefault();
-    console.log("handleSubmit")
     var username= this.state.username,password= this.state.password;
     axios.post(`auth/login`, { username, password })
     .then(res => {
       console.log('auth/login', res)
-      if(!res.data) {alert('Account not found!')}
+      if(!res.data)
+      {alert('Account not found!')}
       else{
       this.props.authCheck(res.data);
-      this.setState({ redirectToReferrer: res.data,  isAuthenticated: res.data});
+      this.setState({ redirectToReferrer: res.data,isAuthenticated: res.data});
     }
     }).catch(err => console.log(err));
     }

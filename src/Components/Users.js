@@ -1,10 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 import "../stylesheets/Users.css"
+import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from 'react-router-dom'
+
 class Users extends React.Component {
   constructor(props) {
     super(props);
-    console.log('User props',props);
+    console.log('Users props',props);
     this.state = { users: [] };
   }
   componentWillMount()
@@ -19,18 +21,18 @@ class Users extends React.Component {
     return (
       <div>
       <ul>
-        <li>{this.state.users.map(user => {return(<User key={user.id} users={user}/>)})}</li>
+        <li className="userrow">{this.state.users.map(user => {return(<User key={user.id} users={user}/>)})}</li>
       </ul>
       </div>
-  )
-};
+  )};
 }
 const User = (props) =>{
   console.log('User func props', props);
   return(
-    <div className="userblock">
+    <Link to={'/users/' + props.users.id} ><div className="userblock">
       <img className="propic "src={props.users.profilepicture}/>
-      <h4>{props.users.username} ({props.users.lastname}, {props.users.firstname})</h4>
-    </div>);
+      <h3>{props.users.username} ({props.users.lastname}, {props.users.firstname})</h3>
+    </div></Link>
+  );
 }
 export default Users;
