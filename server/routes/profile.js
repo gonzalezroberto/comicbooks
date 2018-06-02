@@ -48,6 +48,15 @@ router.get('/loadposts', function(req, res, next) {
     });
   });
 });
+router.get('/loadtimeline', function(req, res, next) {
+  pool.getConnection(function(err, connection) {
+    connection.query("select * from posts order by postid DESC", function (error, results, fields) {
+      res.json(results)
+      connection.release();
+      if (error) throw error;
+    });
+  });
+});
 router.post('/makepost', function(req, res, next) {
   pool.getConnection(function(err, connection) {
     connection.query("select * from accounts where id=?;",[req.session.passport.user], function (error, result, fields) {

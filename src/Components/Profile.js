@@ -46,7 +46,6 @@ componentWillMount(){
         console.log('following:',res.data)
         this.setState({following: res.data});
     });
-
 }
 handlePostChange(status)
 {

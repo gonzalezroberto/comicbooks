@@ -9,17 +9,32 @@ class Timeline extends React.Component {
   constructor(props) {
     super(props);
     console.log('props',props);
-    this.state = { posts: props.state.posts, newPost:''};
+    this.state = { posts: [], newPost:'', following:[]};
     this.deletePost=this.deletePost.bind(this)
   }
 componentWillMount(){
-  this.setState({posts:this.props.state.posts})
-  axios.get('profile/loadposts')
+  axios.get('profile/loadtimeline')
       .then(res =>{
-        console.log('post data in timeline:',res.data)
-        this.setState({posts: res.data});
+        console.log('load timeline:',res.data)
+        this.setState({timeline: res.data});
     });
-  };
+  axios.get('profile/loadfollowing')
+      .then(res =>{
+        console.log('load timeline:',res.data)
+        this.setState({following: res.data});
+    });
+    var posts = []
+      for (var j = 0; i < this.state.posts.length; j++){
+        for (var i = 0; i < this.state.following.length; i++)
+       {
+         if(this.state.posts[j].posterid ===this.state.following[i].followed)
+         {
+           posts.push(this.state.posts[j]);
+         }
+       }
+   }
+   this.setState({posts:posts})
+ };
 
   handleSubmit = event => {
     event.preventDefault();
