@@ -2,12 +2,28 @@
 {
   height: 350px;
   width: 250px;
+  float: left;
+  padding: inherit;
 }
 .comic-block
 {
+  overflow: auto;
+  margin: auto;
 }
 .icon
 {
   width: 20px;
   height: 20px;
+}
+.comic-Info{
+  float: right;
+  background-color: lightgrey;
+}
+.comic-title
+{
+  background-color: lightgrey;
+  font-size: 30px;
+  text-align: center;
+  color: white;
+  text-shadow: 2px 2px #000;
 }

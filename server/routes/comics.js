@@ -25,6 +25,22 @@ router.get('/comics', function(req, res, next) {
     });
   });
 });
+router.post('/update', function(req, res, next) {
+  var comic = req.body.comicchange;
+  pool.getConnection(function(err, connection) {
+    if (err) throw err;
+    connection.query("UPDATE comics SET series=?, \
+      title=?, coverArt=?, publisher=?, datePublished=?, writers=?, coverArtists=?, editors=?,\
+    characters=?,synopsis=? WHERE cid=?;",
+      [comic.series, comic.title, comic.coverArt, comic.publisher,comic.datePublished, comic.writers,
+        comic.coverArtists, comic.editors, comic.characters,
+        comic.synopsis, comic.cid], function (error, results, fields) {
+      res.json('cool');
+      if (error) throw error;
+      connection.release();
+    });
+  });
+});
 router.post('/submitcomic', function(req, res, next) {
   var comic = req.body.comic;
   pool.getConnection(function(err, connection) {
