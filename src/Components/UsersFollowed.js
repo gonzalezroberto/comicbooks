@@ -13,6 +13,7 @@ class UsersFollowed extends React.Component {
     return (
       <Router>
       <div>
+        Following:
         {this.state.users.map(user => {return(<User2 key={user.followed} users={user}/>)})}
       </div>
       </Router>

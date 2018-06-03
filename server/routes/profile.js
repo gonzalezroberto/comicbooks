@@ -16,6 +16,7 @@ router.get('/login', function(req,res, next){
 });
 router.get('/loadfollowers', function(req, res, next) {
   pool.getConnection(function(err, connection) {
+    if (err) throw err;
     var userid = req.session.passport.user;
     connection.query("select * from conections where followed=?;", [userid], function (error, results, fields) {
       res.json(results)
@@ -24,8 +25,12 @@ router.get('/loadfollowers', function(req, res, next) {
     });
   });
 });
+router.get('/getid', function(req, res, next) {
+      res.json(req.session.passport.user)
+});
 router.post('/changephoto', function(req, res, next) {
   pool.getConnection(function(err, connection) {
+    if (err) throw err;
     var newImg=req.body.url
     var userid = req.session.passport.user;
     connection.query("UPDATE accounts SET profilepicture=? WHERE id=?", [newImg,userid], function (error, results, fields) {
@@ -37,6 +42,7 @@ router.post('/changephoto', function(req, res, next) {
 });
 router.get('/loadfollowing', function(req, res, next) {
   pool.getConnection(function(err, connection) {
+    if (err) throw err;
     var userid = req.session.passport.user;
     connection.query("select * from conections where follower=?;", [userid], function (error, results, fields) {
       res.json(results)
@@ -47,6 +53,7 @@ router.get('/loadfollowing', function(req, res, next) {
 });
 router.get('/loadposts', function(req, res, next) {
   pool.getConnection(function(err, connection) {
+    if (err) throw err;
     console.log('loadposts req', req)
     var userid = req.session.passport.user;   //<---- this is the actual way to get user id from current user
     connection.query("select * from posts where posterid=? and receiverid=?  order by postid DESC", [userid,userid], function (error, results, fields) {
@@ -61,6 +68,7 @@ router.get('/loadposts', function(req, res, next) {
 });
 router.get('/loadtimeline', function(req, res, next) {
   pool.getConnection(function(err, connection) {
+    if (err) throw err;
     connection.query("select * from posts order by postid DESC", function (error, results, fields) {
       res.json(results)
       connection.release();
@@ -70,6 +78,7 @@ router.get('/loadtimeline', function(req, res, next) {
 });
 router.post('/makepost', function(req, res, next) {
   pool.getConnection(function(err, connection) {
+    if (err) throw err;
     connection.query("select * from accounts where id=?;",[req.session.passport.user], function (error, result, fields) {
     var userid = req.session.passport.user;
     var postername = result[0].firstname, posterpicture = result[0].profilepicture;
@@ -98,6 +107,7 @@ router.post('/makepost', function(req, res, next) {
 });
 router.post('/deletepost', function(req, res, next) {
   pool.getConnection(function(err, connection) {
+    if (err) throw err;
     var postid = req.body.postid;
     connection.query("DELETE FROM posts WHERE postid=?;",[postid], function (error, results, fields) {
       console.log('results', results);

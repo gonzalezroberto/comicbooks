@@ -18,6 +18,7 @@ router.post('/signup', function(req, res, next) {
   var user = req.body;
   var username=user.username,pass=user.pass,first=user.firstname,last=user.lastname,pic="https://imageshack.com/a/img540/7545/KQQN7U.jpg";
   pool.getConnection(function(err, connection) {
+    if (err) throw err;
     connection.query('SELECT * FROM accounts WHERE username= ?', [username],
     function (error, results, fields) {
       if (error) throw error;

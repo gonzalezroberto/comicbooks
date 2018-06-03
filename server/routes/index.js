@@ -16,6 +16,7 @@ router.get('/login', function(req,res, next){
 });
 router.get('/loadusers', function(req, res, next) {
   pool.getConnection(function(err, connection) {
+    if (err) throw err;
     connection.query("select * from accounts;", function (error, results, fields) {
       res.json(results)
       connection.release();
@@ -25,6 +26,7 @@ router.get('/loadusers', function(req, res, next) {
 });
 router.get('/getuser', function(req, res, next) {
   pool.getConnection(function(err, connection) {
+    if (err) throw err;
     var userid = req.session.passport.user
     connection.query('select * from accounts where id = ?;',[userid], function (error, results, fields) {
       console.log('results in getuser', results[0]);
@@ -36,6 +38,7 @@ router.get('/getuser', function(req, res, next) {
 });
 router.get('/loadnews', function(req, res, next) {
   pool.getConnection(function(err, connection) {
+    if (err) throw err;
     connection.query("select * from newsfeed order by id DESC", function (error, results, fields) {
       res.json(results)
       connection.release();

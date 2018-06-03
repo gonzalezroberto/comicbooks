@@ -16,6 +16,7 @@ router.get('/login', function(req,res, next){
 });
 router.post('/comics', function(req, res, next) {
   pool.getConnection(function(err, connection) {
+    if (err) throw err;
     connection.query('select * from comics where series=?',[req.body.series], function (error, results, fields) {
       res.json(results);
       connection.release();
@@ -34,6 +35,7 @@ router.post('/postcomment', function(req, res, next) {
   if(min.length===1){min='0'+min;}
   var time = hour+":"+min+dayornight;
   pool.getConnection(function(err, connection) {
+    if (err) throw err;
     connection.query("select * from accounts where id=?;", [req.session.passport.user], function (error, result, fields) {
       var posterInfo = result[0];
       connection.query("insert into comments (series, commenterid, comment,date,time,posterpic,postername) values(?,?,?,?,?,?,?);",
@@ -49,6 +51,7 @@ router.post('/postcomment', function(req, res, next) {
 
 router.post('/getcomments', function(req, res, next) {
   pool.getConnection(function(err, connection) {
+    if (err) throw err;
     connection.query("SELECT * FROM comments WHERE series=?;", [req.body.series], function (error, results, fields) {
       console.log(results)
       res.json(results)

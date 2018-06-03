@@ -24,6 +24,7 @@ router.post('/login', function(req, res, next) {
   var user = req.body;
   var username=user.username,pass=user.password;
 pool.getConnection(function(err, connection) {
+  if (err) throw err;
     connection.query('SELECT * FROM accounts WHERE username= ? and password= ?;', [username, pass],
     function (error, results, fields) {
       if(results.length !== 0){ //results is an array. if size 0, np results found

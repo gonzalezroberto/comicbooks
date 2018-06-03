@@ -18,6 +18,7 @@ router.get('/login', function(req,res, next){
 router.post('/checkIfFollowed', function(req,res, next){
   var followerid = req.session.passport.user, followedid = req.body.receiverid;
   pool.getConnection(function(err, connection) {
+    if (err) throw err;
   connection.query("select * from conections where follower=? and followed=?;", [followerid,followedid], function (error, results, fields) {
     console.log('checkIfFollowed resutls', results)
     if (error) throw error;
@@ -30,6 +31,7 @@ router.post('/checkIfFollowed', function(req,res, next){
 })
 router.post('/loadfollowers', function(req, res, next) {
   pool.getConnection(function(err, connection) {
+    if (err) throw err;
     var userid = req.body.receiverid;
     connection.query("select * from conections where followed=?;", [userid], function (error, results, fields) {
       res.json(results)
@@ -40,6 +42,7 @@ router.post('/loadfollowers', function(req, res, next) {
 });
 router.post('/loadfollowing', function(req, res, next) {
   pool.getConnection(function(err, connection) {
+    if (err) throw err;
     var userid = req.body.receiverid;
     connection.query("select * from conections where follower=?;", [userid], function (error, results, fields) {
       res.json(results)
@@ -50,6 +53,7 @@ router.post('/loadfollowing', function(req, res, next) {
 });
 router.post('/follow', function(req, res, next) {
   pool.getConnection(function(err, connection) {
+    if (err) throw err;
     console.log('follow req body', req.body);
     var followerid = req.session.passport.user, followedid = req.body.receiverid, followedInfo = req.body.receiverInfo;
     connection.query("select * from accounts where id=?;", [followerid], function (error, result, fields) {
@@ -72,6 +76,7 @@ router.post('/follow', function(req, res, next) {
 });
 router.post('/loadposts', function(req, res, next) {
   pool.getConnection(function(err, connection) {
+    if (err) throw err;
     // Use the connection
     var userid = req.body.receiverid;   //<---- this is the actual way to get user id from current user
     connection.query("select * from posts where receiverid=? order by postid DESC", [userid], function (error, results, fields) {
@@ -87,6 +92,7 @@ router.post('/loadposts', function(req, res, next) {
 });
 router.post('/makepost', function(req, res, next) {
   pool.getConnection(function(err, connection) {
+    if (err) throw err;
     var postername, posterpicture;
     connection.query("select * from accounts where id=?;",[req.session.passport.user], function (error, result, fields) {
       console.log('result', result);
@@ -122,6 +128,7 @@ router.post('/makepost', function(req, res, next) {
 });
 router.post('/deletepost', function(req, res, next) {
   pool.getConnection(function(err, connection) {
+    if (err) throw err;
     var postid = req.body.postid;
     connection.query("DELETE FROM posts WHERE postid=?;",[postid], function (error, results, fields) {
       console.log('results', results);
@@ -136,7 +143,7 @@ router.post('/deletepost', function(req, res, next) {
 });
 router.post('/getuser', function(req, res, next) {
   pool.getConnection(function(err, connection) {
-    // Use the connection
+    if (err) throw err;
     console.log('getuser')
     console.log('userid', req.body)
     var userid = req.body.loadid

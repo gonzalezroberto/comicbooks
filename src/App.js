@@ -65,6 +65,7 @@ import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from
               <Route exact path="/news/:id"  render={(props) =><NewsProfile/>}/>
               <Route exact path="/users/:id"  render={(props) =><ProfileVisit state={this.state.isAuthenticated} {...props}/>}/>
               <Route exact path="/users"  render={(props) =><Users {...props}/>}/>
+              <Route path="*" component={NotFound} />
               </Switch>
 
           </div>
@@ -144,6 +145,12 @@ class Login extends React.Component {
     );
   }
 }
+const NotFound = () =>
+  <div>
+    <h3>404 page not found</h3>
+    <p>We are sorry but the page you are looking for does not exist.</p>
+  </div>
+
 function showData(data) {
   return console.log ('showData:', data);
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import "../stylesheets/Posts.css"
-import Timeline from "./Timeline"
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Link, withRouter } from "react-router-dom";
 

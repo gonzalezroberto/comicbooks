@@ -9,26 +9,30 @@ class Timeline extends React.Component {
   constructor(props) {
     super(props);
     console.log('props',props);
-    this.state = { posts: [], newPost:'', following:[]};
+    this.state = { posts: [], newPost:'', following:[], currentId:''};
     this.deletePost=this.deletePost.bind(this)
   }
 componentWillMount(){
   axios.get('profile/loadtimeline')
       .then(res =>{
         console.log('load timeline:',res.data)
-        this.setState({timeline: res.data});
+        this.setState({posts: res.data});
     });
   axios.get('profile/loadfollowing')
       .then(res =>{
         console.log('load timeline:',res.data)
         this.setState({following: res.data});
     });
+  axios.get('profile/getid')
+      .then(res =>{
+        this.setState({currentId: res.data});
+    });
+    var tempFollowing = this.state.following.slice();
+    tempFollowing.push({followed:this.state.currentId})
     var posts = []
       for (var j = 0; i < this.state.posts.length; j++){
-        for (var i = 0; i < this.state.following.length; i++)
-       {
-         if(this.state.posts[j].posterid ===this.state.following[i].followed)
-         {
+        for (var i = 0; i < tempFollowing.length; i++){
+         if(this.state.posts[j].posterid === tempFollowing[i].followed){
            posts.push(this.state.posts[j]);
          }
        }
@@ -60,11 +64,11 @@ componentWillMount(){
     .then((res) => {
       console.log('deletepost data:',res.data)
       });
-      axios.get('profile/loadposts')
-      .then((res) => {
-        console.log('post data:',res.data)
-        this.setState({posts: res.data});
-        });
+    axios.get('profile/loadposts')
+    .then((res) => {
+      console.log('post data:',res.data)
+      this.setState({posts: res.data});
+      });
   }
   render() {
     return (
@@ -93,9 +97,8 @@ const Posts =(props) =>{
     <div className="postblock">
       <j className="dateonpost">{time} {date}</j>
       <img className="posterpic "src={props.post.posterpicture}/>
-      <h4>{props.post.postername}:{props.post.content}</h4>
-      <button>comment</button>
-      <button className ="delete-button" onClick={() => props.delete(props.post.postid)} type ="delete">delete post</button>
+      <div><h4>{props.post.postername}:</h4> <h7>{props.post.content}</h7></div>
+      <button>comment</button>      <button className ="delete-button" onClick={() => props.delete(props.post.postid)} type ="delete">delete post</button>
     </div>);
 }
 

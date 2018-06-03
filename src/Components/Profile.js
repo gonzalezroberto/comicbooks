@@ -71,46 +71,44 @@ render()
           background: "#f0f0f0"
         }}
       >
-        <ul style={{ listStyleType: "none", padding: 0 }}>
-          <h3>Welcome {this.state.accounts.first}!</h3>
-          <img src={this.state.accounts.pic} />
-          <h3>Name: {this.state.accounts.first} {this.state.accounts.last}</h3>
-          <h7>username: @{this.state.accounts.username} </h7>
-            <button className ="logout-button"
-                type ="button"
-                onClick = {event => this.logout()}
-                >
-                Logout
-                </button>
-
-        <li>
-            <Link to={`${this.props.match.url}/wall`}>Your Wall</Link>
-          </li>
-          <li>
-            <Link to={`${this.props.match.url}/followers`}>Followers</Link>
-          </li>
-          <li>
-            <Link to={`${this.props.match.url}/following`}>Following</Link>
-          </li>
-          <li>
-            <Link to={`${this.props.match.url}/changephoto`}>Change Picture</Link>
-          </li>
-        </ul>
+      <h3>Welcome {this.state.accounts.first}!</h3>
+      <img src={this.state.accounts.pic} />
+      <div className="profileuserinfo">
+      {this.state.accounts.first} {this.state.accounts.last}
+      <p>@{this.state.accounts.username} </p>
+      </div>
+      <button className ="logout-button"
+          type ="button"
+          onClick = {event => this.logout()}
+          >
+          Logout
+      </button>
+          <li><Link to={`${this.props.match.url}`}>Timeline</Link></li>
+          <li><Link to={`${this.props.match.url}/wall`}>Wall</Link></li>
+          <li><Link to={`${this.props.match.url}/followers`}>Followers</Link></li>
+          <li><Link to={`${this.props.match.url}/following`}>Following</Link></li>
+          <li><Link to={`${this.props.match.url}/changephoto`}>Change Picture</Link></li>
       </div>
 
       <div style={{ flex: 1, padding: "10px" }}>
         <Switch>
-          <Route exact path={this.props.match.url + '/'}  render={() => <Timeline state={this.state} postChange ={this.handlePostChange}/>} />
+          <Route exact path={this.props.match.url + ''}  render={() => <Timeline state={this.state} postChange ={this.handlePostChange}/>} />
           <Route exact path={this.props.match.url + '/wall'}  render={() => <Wall state={this.state} postChange ={this.handlePostChange}/>} />
           <Route exact path={this.props.match.url + '/following'}  render={(props) => <UsersFollowed {...props} users={this.state.following}/>} />
           <Route exact path={this.props.match.url + '/followers'}  render={(props) => <UsersFollower {...props} users={this.state.followers}/>} />
           <Route exact path={this.props.match.url + '/changephoto'}  render={(props) => <Changephoto {...props} users={this.state.followers}/>} />
-      </Switch>
+          <Route path="*" component={NotFound} />
+    </Switch>
     </div>
     </div>
   </Router>
 )
 }
 }
+const NotFound = () =>
+  <div>
+    <h3>404 page not found</h3>
+    <p>We are sorry but the page you are looking for does not exist.</p>
+  </div>
 
 export default Profile;

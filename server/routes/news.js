@@ -16,6 +16,7 @@ router.get('/login', function(req,res, next){
 });
 router.post('/getarticle', function(req, res, next) {
   pool.getConnection(function(err, connection) {
+    if (err) throw err;
       connection.query("SELECT * FROM newsfeed WHERE id=?;", [req.body.newsId], function (error, results, fields) {
         console.log(results)
         res.json(results[0])
@@ -35,6 +36,7 @@ router.post('/postcomment', function(req, res, next) {
   if(min.length===1){min='0'+min;}
   var time = hour+":"+min+dayornight;
   pool.getConnection(function(err, connection) {
+    if (err) throw err;
     connection.query("select * from accounts where id=?;", [req.session.passport.user], function (error, result, fields) {
       var posterInfo = result[0];
       connection.query("insert into comments (newsid, commenterid, comment,date,time,posterpic,postername) values(?,?,?,?,?,?,?);",
@@ -50,6 +52,7 @@ router.post('/postcomment', function(req, res, next) {
 
 router.post('/getcomments', function(req, res, next) {
   pool.getConnection(function(err, connection) {
+    if (err) throw err;
     connection.query("SELECT * FROM comments WHERE newsid=?;", [req.body.newsId], function (error, results, fields) {
       console.log(results)
       res.json(results)

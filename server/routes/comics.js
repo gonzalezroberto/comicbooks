@@ -17,6 +17,7 @@ router.get('/login', function(req,res, next){
 });
 router.get('/comics', function(req, res, next) {
   pool.getConnection(function(err, connection) {
+    if (err) throw err;
     connection.query('select * from comics', function (error, results, fields) {
       res.json(results);
       connection.release();
@@ -26,28 +27,62 @@ router.get('/comics', function(req, res, next) {
 });
 router.post('/submitcomic', function(req, res, next) {
   var comic = req.body.comic;
-  console.log('comic',comic);
   pool.getConnection(function(err, connection) {
+    if (err) throw err;
     connection.query("INSERT INTO comics (series, \
       title, coverArt, publisher, datePublished, writers, coverArtists, editors,\
     characters,synopsis) VALUES (?,?,?,?,?,?,?,?,?,?);",
       [comic.series, comic.title, comic.img, comic.publisher,comic.datepublished, comic.writer, comic.artist, comic.editor, comic.characters,
         comic.synopsis], function (error, results, fields) {
-      console.log('results',results);
       res.json('cool');
       if (error) throw error;
+      connection.release();
+    });
+  });
+});
+router.post('/rating', function(req, res, next) {
+  pool.getConnection(function(err, connection) {
+    if (err) throw err;
+    connection.query("INSERT INTO ratings (rate, comicid) VALUES (?,?);",
+      [req.body.rating, req.body.comicId], function (error, results, fields) {
+      if (error) throw error;
+    });
+    connection.query("select * from ratings where comicid=?;",
+      [req.body.comicId], function (error, results, fields) {
+        if (err) throw err;
+      var ratings = results.slice();
+      var total = 0;
+      for (var i = 0; i < ratings.length; i++) {total += ratings[i].rate}
+      var sum = (total/ratings.length)
+      if (error) throw error;
+      connection.query("update comics set rating=? where cid=?;",
+        [sum,req.body.comicId], function (error, result, fields) {
+        if (error) throw error;
+        res.json("cool")
+      });
+    });
+      connection.release();
+  });
+  });
+
+router.post('/getrating', function(req, res, next) {
+  pool.getConnection(function(err, connection) {
+    if (err) throw err;
+    connection.query("select rating from comics where cid=?;",
+      [req.body.comicId], function (error, results, fields) {
+      res.json(results[0].rating);
+      if (error) throw error;
+      connection.release();
     });
   });
 });
 router.post('/comics', function(req, res, next) {
   var id = req.body.comicId
-  console.log('post id: ' , id)
   pool.getConnection(function(err, connection) {
+    if (err) throw err;
     connection.query('SELECT * FROM comics WHERE cid = ?;', [id], function (error, results, fields) {
-      console.log('results',results);
       if(results.length !==0)
       {
-        console.log('comic results:', results);
         res.json(results[0]);
       }
       else{res.json(false)}
