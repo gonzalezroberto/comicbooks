@@ -15,6 +15,19 @@ var pool  = mysql.createPool({
 router.get('/login', function(req,res, next){
   res.json(typeof req.session.passport !== 'undefined' && req.session.passport !== null);
 });
+router.post('/checkpriv', function(req, res, next) {
+  var user = req.session.passport.user, comic=req.body.comicId
+  console.log('user', user)
+  console.log('comic', comic)
+  pool.getConnection(function(err, connection) {
+    if (err) throw err;
+    connection.query('select * from editingpriv where editorid=? and comicid=?;', [user, comic],function (error, results, fields) {
+      console.log('results: ', results)
+      if(results.length !== 0){res.json(true);}
+        else{res.json(false);}
+      connection.release();
+      if (error) throw error;
+  })})})
 router.get('/comics', function(req, res, next) {
   pool.getConnection(function(err, connection) {
     if (err) throw err;

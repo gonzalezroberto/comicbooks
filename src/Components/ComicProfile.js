@@ -8,21 +8,20 @@ class ComicProfile extends Component {
   constructor(props) {
     super(props);
     console.log(props);
-    this.state = { comic:'', isAuthenticated:props.state,
-      rating:'', isHidden:false,showPopup: false,
-      comicsub:
-      {img:'',title:'test',series:'test',writer:'test',
-        artist:'',editor:'',publisher:'',datepublished:'',characters:'',synopsis:''}
+    this.state = { comic:'', isAuthenticated:false,
+      rating:'', isHidden:!false, showPopup: false,
+      comicsub:{img:'',title:'',series:'',writer:'', artist:'',editor:'',publisher:'',datepublished:'',characters:'',synopsis:''}
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleChange2 = this.handleChange2.bind(this);
   }
   componentWillMount(){
+    var comicId = this.props.match.params.id;
     axios.get('/data/login')
-      .then(res =>{
+      .then(res =>{console.log('login:', res.data)
+        this.props.authCheck(res.data)
           this.setState({isAuthenticated:res.data});
       }).catch(err => console.log(err));
-    var comicId = this.props.match.params.id;
     axios.post('/data/comics', {comicId})
       .then(res =>{
         if(res.data !== false){
@@ -33,6 +32,16 @@ class ComicProfile extends Component {
         this.setState({ rating: res.data })
       }).catch(err => console.log(err));
   };
+  componentDidMount(){
+    var comicId = this.props.match.params.id;
+  if(this.state.isAuthenticated || this.props.state.isAuthenticated){
+    console.log('checking priv...')
+    axios.post('/data/checkpriv',{comicId})
+      .then(res =>{
+          this.setState({isHidden:!res.data});
+      }).catch(err => console.log(err));
+  }
+  }
   togglePopup(){
   this.setState({
     showPopup: !this.state.showPopup
