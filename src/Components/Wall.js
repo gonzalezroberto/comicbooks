@@ -17,7 +17,6 @@ componentWillMount(){
   this.setState({posts:this.props.state.posts})
   axios.get('loadposts')
       .then(res =>{
-        console.log('post data in Wall cwm:',res.data)
         this.props.postChange(res.data);
         this.setState({posts: res.data});
     });
@@ -31,7 +30,6 @@ componentWillMount(){
 
     axios.get('loadposts')
         .then((res) => {
-          console.log('post data in HS in Wall:',res.data)
           this.props.postChange(res.data);
           this.setState({posts: res.data});
       });
@@ -44,12 +42,9 @@ componentWillMount(){
     var postid= objId;
     axios.post('deletepost', {postid})
         .then((res) => {
-          console.log('deletepost data:',res.data)
       });
       axios.get('loadposts')
           .then((res) => {
-            console.log('post data delete:',res.data)
-            //console.log('props', props)
             this.props.postChange(res.data);
             this.setState({posts: res.data});
         });
@@ -63,7 +58,6 @@ componentWillMount(){
         placeholder ="What is on your mind?"
         onChange = {(event) => this.setState({newPost: event.target.value})}
          />
-
        <button className ="submit" disabled={!this.validateForm()} type ="submit">Post</button>
        </form>
         {this.state.posts.map(post => {return(<Posts key= {post.id} delete={this.deletePost} post= {post}/>)})}
