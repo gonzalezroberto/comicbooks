@@ -46,7 +46,9 @@ componentWillMount(){
     <img className="newsCoverArt" src={this.state.news.coverart} width='400px' height='500px'/>
 
     <p>posted: {this.state.news.dateposted}</p>
+    <p className="news-body">{this.state.news.newscontent}</p>
     <p>Link to original post: <a href={this.state.news.newslink}>{this.state.news.newslink}</a>  </p>
+
     <h4>Comments:</h4>
       <form className="commentform">
       <input className ="comment-post"

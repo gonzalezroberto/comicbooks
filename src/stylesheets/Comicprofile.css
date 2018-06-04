@@ -3,7 +3,7 @@
   height: 350px;
   width: 250px;
   float: left;
-  padding: inherit;
+  padding: 1px;
 }
 .comic-block
 {
@@ -26,4 +26,28 @@
   text-align: center;
   color: white;
   text-shadow: 2px 2px #000;
+}
+ul{
+  list-style: none;
+}
+.comicinfo
+{
+  padding-left: 15em;
+}
+.spoiler
+{
+  display:none;
+  font-family: sans-serif;
+  color: red;
+}
+span{
+  color:red;
+  font-size: 20px;
+  font-weight: bold;
+}
+span:hover + .spoiler
+{
+  display: block;
+  font-family: sans-serif;
+  color: red;
 }

@@ -108,7 +108,7 @@ handleSubmit = event => {
                   closePopup={this.togglePopup.bind(this)}/>
                   :null}
         </div>
-        <ul>
+        <ul className="comicinfo">
           <li>Series: {this.state.comic.series}</li>
           <li>Writers: {this.state.comic.writers}</li>
           <li>Editors: {this.state.comic.editors}</li>
@@ -117,6 +117,7 @@ handleSubmit = event => {
           <li>Published: {this.state.comic.datePublished}</li>
           <li>Characters: {this.state.comic.characters}</li>
           <li>Synopsis: {this.state.comic.synopsis}</li>
+          <span>Spoiler Alert!</span><li className="spoiler"> {this.state.comic.spoiler}</li>
         </ul>
       </div>
       </div>

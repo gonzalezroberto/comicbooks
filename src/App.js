@@ -68,7 +68,8 @@ import { BrowserRouter as Router, Route,Switch, Link, withRouter, Redirect} from
           </div>
 
         </Router>
-        <div className ="footer"><p className="footer-companyname">FizzBuzz LLC Copyright 2018 | 123 First Ave PO BOX #332</p></div>
+        <div className ="footer"><p className="footer-companyname"><p><a href="https://fizzbuzzllc.wordpress.com">Company Website</a>
+      </p>FizzBuzz LLC Copyright 2018 | 123 First Ave PO BOX #332</p></div>
         </div>
       )
     }

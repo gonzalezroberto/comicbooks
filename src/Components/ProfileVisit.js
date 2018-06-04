@@ -148,7 +148,6 @@ const Posts =(props) =>{
       <j className="dateonpost">{time} {date}</j>
       <img className="posterpic "src={props.post.posterpicture}/>
       <div><h4>{props.post.postername}:</h4> {props.post.content}</div>
-      <button>comment</button>
     </div>);
 }
 export default ProfileVisit;

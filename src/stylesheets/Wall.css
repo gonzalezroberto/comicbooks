@@ -1,0 +1,9 @@
+.user-post
+{
+  width: 70%;
+  overflow: auto;
+}
+li
+{
+  list-style: none;
+}

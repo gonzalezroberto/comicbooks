@@ -6,9 +6,7 @@ return (
   <div className= "row">
 <div className="title-area"><h5 className="title"><Link to={'/news/' + props.news.id}>{props.news.content}</Link></h5></div>
   <div className="date-area">date:<p1>{props.news.dateposted}</p1></div>
-
  <div className="pic-area"><p><span><img src={props.news.coverart} alt= "newspic"/></span></p></div>
-
 
    </div>
 );

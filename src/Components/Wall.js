@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import "../stylesheets/Posts.css"
+import "../stylesheets/Wall.css"
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Link, withRouter } from "react-router-dom";
 
@@ -10,6 +11,7 @@ class Wall extends React.Component {
     console.log('props',props);
     this.state = { posts: props.state.posts, newPost:''};
     this.deletePost=this.deletePost.bind(this)
+    this.handleSubmit =this.handleSubmit.bind(this);
   }
 componentWillMount(){
   this.setState({posts:this.props.state.posts})
@@ -83,7 +85,6 @@ const Posts =(props) =>{
       <j className="dateonpost">{time} {date}</j>
       <img className="posterpic "src={props.post.posterpicture}/>
       <h4>{props.post.postername}:{props.post.content}</h4>
-      <button>comment</button>
       <button className ="delete-button" onClick={() => props.delete(props.post.postid)} type ="delete">delete post</button>
     </div>);
 }

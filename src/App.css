@@ -10,6 +10,7 @@
   padding: 0;
   display: flex;
   justify-content: space-around;
+  text-decoration: none;
 
 }
 .top_header{
@@ -28,7 +29,7 @@ header section {
 }
 
 nav {
-
+text-decoration: none;
 	background-color: lightgrey;
 	border: solid 2px;
 }
@@ -38,7 +39,7 @@ nav {
   margin-right: 100px;
   font-size: 2px;
   margin-left: 200px;
-
+text-decoration: none;
 }
 .username
 {
@@ -55,6 +56,13 @@ nav {
       margin: 8px 0;
       box-sizing: border-box;
 
+}
+a{
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius:5px;
 }
 .footer
 {
